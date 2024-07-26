@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { h, ref, render, watchEffect } from "vue";
+import { h, ref, render, watchEffect, unref } from "vue";
 import {
   draggable,
   dropTargetForElements,
@@ -13,8 +13,7 @@ import {
 import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview";
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
-import { unrefElement } from "@vueuse/core";
-import './table-tree-item-dnd.css';
+import "./table-tree-item-dnd.css";
 
 interface Props {
   id: string | number;
@@ -42,7 +41,7 @@ watchEffect((onCleanup) => {
     rowElement = spanRef.value?.closest(".el-table__row");
   }
   const elRef = ref(rowElement);
-  const currentElement = unrefElement(elRef);
+  const currentElement = unref(elRef);
 
   if (!currentElement) return;
 
@@ -103,7 +102,6 @@ watchEffect((onCleanup) => {
         instruction.value = extractInstruction(
           self.data
         ) as typeof instruction.value;
-        console.log('instruction',instruction.value)
       },
 
       onDragLeave: () => {
