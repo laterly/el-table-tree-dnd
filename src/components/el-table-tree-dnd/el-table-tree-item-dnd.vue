@@ -143,6 +143,5 @@ watchEffect((onCleanup) => {
         '!border-2 rounded': instruction?.type === 'make-child',
       }"
     />
-    {{instruction}}
   </span>
 </template>

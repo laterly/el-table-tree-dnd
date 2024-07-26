@@ -1,49 +1,40 @@
 export const trees = [
   {
-    title: "composables",
-    icon: "lucide:folder",
-    id: "1",
+    id: 1,
+    title: "节点 1",
     children: [
       {
-        id: "1-1",
-        title: "useAuth.ts",
-        icon: "vscode-icons:file-type-typescript",
-      },
-      {
-        id: "1-2",
-        title: "useUser.ts",
-        icon: "vscode-icons:file-type-typescript",
-      },
-    ],
-  },
-  {
-    title: "components",
-    icon: "lucide:folder",
-    id: "2",
-    children: [
-      {
-        id: "2-1",
-        title: "Home",
-        icon: "lucide:folder",
+        id: 2,
+        title: "子节点 1-1",
         children: [
           {
-            id: "2-1-1",
-            title: "Card.vue",
-            icon: "vscode-icons:file-type-vue",
+            id: 5,
+            title: "子节点 1-1-1",
           },
           {
-            id: "2-1-2",
-            title: "Button.vue",
-            icon: "vscode-icons:file-type-vue",
+            id: 6,
+            title: "子节点 1-1-2",
           },
         ],
       },
+      {
+        id: 3,
+        title: "子节点 1-2",
+      },
     ],
   },
-  { id: "3", title: "app.vue", icon: "vscode-icons:file-type-vue" },
   {
-    id: "4",
-    title: "nuxt.config.ts",
-    icon: "vscode-icons:file-type-nuxt",
+    id: 4,
+    title: "节点 2",
+    children: [
+      {
+        id: 7,
+        title: "子节点 2-1",
+      },
+      {
+        id: 8,
+        title: "子节点 2-2",
+      },
+    ],
   },
 ];
