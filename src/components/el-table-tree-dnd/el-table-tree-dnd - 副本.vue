@@ -9,7 +9,7 @@ import {
 import ElTableTreeItemDnd from "./el-table-tree-item-dnd.vue";
 import { updateTree as updateTableTree } from "./tree-utils";
 import "./table-tree-item-dnd.css";
-import { Recordable, TableColumn } from "./types";
+import { TableColumn, Recordable } from "./types";
 
 interface Props {
   data?: Recordable[];
@@ -96,6 +96,7 @@ watchEffect((onCleanup) => {
         :headerAlign="props.headerAlign"
         :prop="column.field"
         :label="column.label"
+        v-bind="column"
         #default="scope"
       >
         <el-table-tree-item-dnd
@@ -106,7 +107,10 @@ watchEffect((onCleanup) => {
             value: scope?.row,
             hasChildren: !!scope?.row?.children?.length,
           }"
-        />
+          :column="column"
+        >
+          
+        </el-table-tree-item-dnd>
       </el-table-column>
     </el-table>
   </div>

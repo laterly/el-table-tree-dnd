@@ -11,5 +11,14 @@ const onDrop = (newTreeData: any[]) => {
 };
 </script>
 <template>
-  <el-table-tree-dnd :data="data" @drop="onDrop" />
+  <el-table-tree-dnd
+    :data="data"
+    :columns="[
+      {
+        field: 'title',
+        label: '标题',
+      },
+    ]"
+    @drop="onDrop"
+  />
 </template>
