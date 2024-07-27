@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { h, ref, render, watchEffect, unref } from "vue";
+import {
+  h,
+  ref,
+  render,
+  onMounted,
+  unref,
+  onBeforeUnmount,
+  watchEffect,
+} from "vue";
 import {
   draggable,
   dropTargetForElements,
@@ -14,8 +22,10 @@ import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/eleme
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import "./table-tree-item-dnd.css";
+import { treeRecordObj, setTreeRecord } from "./utils";
+import { TableColumn } from "./types";
 
-interface Props {
+interface ItemProps {
   id: string | number;
   index: number;
   level: number;
@@ -23,9 +33,12 @@ interface Props {
   hasChildren: boolean;
 }
 
-const props = defineProps<{
-  item: Props;
-}>();
+interface Props {
+  column: TableColumn;
+  item: ItemProps;
+}
+
+const props = defineProps<Props>();
 
 const spanRef = ref();
 const isDragging = ref(false);
@@ -35,7 +48,9 @@ const instruction = ref<Extract<
   { type: "reorder-above" | "reorder-below" | "make-child" }
 > | null>(null);
 
-watchEffect((onCleanup) => {
+let dndFunction;
+
+onMounted(() => {
   let rowElement;
   if (spanRef.value) {
     rowElement = spanRef.value?.closest(".el-table__row");
@@ -43,15 +58,23 @@ watchEffect((onCleanup) => {
   const elRef = ref(rowElement);
   const currentElement = unref(elRef);
 
-  if (!currentElement) return;
+  if (!currentElement) {
+    return;
+  }
 
+  if (treeRecordObj[props.item?.index]) {
+    return;
+  }
+
+  setTreeRecord(props.item?.index);
+  console.log("进来了呀", currentElement);
   const item = {
     ...props.item.value,
     level: props.item.level,
     id: props.item.id,
   };
 
-  const dndFunction = combine(
+  dndFunction = combine(
     draggable({
       element: currentElement,
       getInitialData: () => item,
@@ -96,6 +119,8 @@ watchEffect((onCleanup) => {
         });
       },
       canDrop: ({ source }) => {
+        console.log("source.data", source.data);
+        console.log("iem", item.id);
         return source.data.id !== item.id;
       },
       onDrag: ({ self }) => {
@@ -119,13 +144,43 @@ watchEffect((onCleanup) => {
       },
     })
   );
+});
+onBeforeUnmount(() => {
+  dndFunction?.();
+});
 
-  onCleanup(() => dndFunction());
+watchEffect(() => {
+  const rowElement = spanRef.value?.closest(".el-table__row") as HTMLDivElement;
+
+  rowElement?.classList?.add("relative");
+  if (isDragging.value) {
+    rowElement?.classList?.add("opacity-50");
+  } else {
+    rowElement?.classList?.remove("opacity-50");
+  }
+
+  // const cellElement = spanRef.value?.closest(
+  //   ".el-table__cell"
+  // ) as HTMLDivElement;
+  // if (instruction?.value) {
+  //   rowElement?.classList?.remove("relative");
+  // } else {
+  //   rowElement?.classList?.add("relative");
+  // }
 });
 </script>
 <template>
   <span ref="spanRef" :class="{ 'opacity-50': isDragging }">
-    <span class="pl-2">{{ props.item.value.title }}</span>
+    <span class="pl-2" v-if="props.column?.slots?.default">
+      <slot :name="props.column?.slots?.default"></slot>
+    </span>
+    <span v-else class="pl-2">{{
+      props?.column?.formatter?.({
+        row: props.item?.value,
+        column: props.column,
+        $index: props.item?.index,
+      }) || props.item?.value?.[props.column?.field]
+    }}</span>
     <span
       v-if="instruction"
       class="absolute h-full w-full top-0 border-blue-500"

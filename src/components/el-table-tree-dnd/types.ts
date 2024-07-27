@@ -34,8 +34,7 @@ export interface TableColumn {
   formatter?: (props: {
     row: Recordable;
     column: TableColumn;
-    cellValue?: any;
-    index?: number;
+    $index?: number;
   }) => any;
   showOverflowTooltip?: boolean;
   align?: "left" | "center" | "right";

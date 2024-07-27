@@ -9,7 +9,7 @@ import {
 import ElTableTreeItemDnd from "./el-table-tree-item-dnd.vue";
 import { updateTree as updateTableTree } from "./tree-utils";
 import "./table-tree-item-dnd.css";
-import { TableColumn, Recordable } from "./types";
+import { TableColumn, Recordable } from "./types/types";
 
 interface Props {
   data?: Recordable[];

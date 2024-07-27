@@ -1,11 +1,10 @@
 import type { Instruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
+import { Recordable } from "./types";
 
-export type TreeItem = {
-  id: string;
-  title: string;
-  icon: string;
+export interface TreeItem extends Recordable {
+  id?: string;
   children?: TreeItem[];
-};
+}
 
 export type TreeAction =
   | {
@@ -240,3 +239,9 @@ function getChildItems(data: TreeItem[], targetId: string) {
 
   return targetItem.children;
 }
+
+export const treeRecordObj: Record<string, boolean> = {};
+
+export const setTreeRecord = (index: number) => {
+  treeRecordObj[index] = true;
+};

@@ -7,7 +7,7 @@ import {
   extractInstruction,
 } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
 import ElTableTreeItemDnd from "./el-table-tree-item-dnd.vue";
-import { updateTree as updateTableTree } from "./tree-utils";
+import { updateTree } from "./utils";
 import "./table-tree-item-dnd.css";
 import { Recordable, TableColumn } from "./types";
 
@@ -60,7 +60,7 @@ watchEffect((onCleanup) => {
 
         if (instruction !== null) {
           const treesData =
-            updateTableTree(props.data, {
+            updateTree(props.data, {
               type: "instruction",
               instruction,
               itemId,
@@ -96,17 +96,31 @@ watchEffect((onCleanup) => {
         :headerAlign="props.headerAlign"
         :prop="column.field"
         :label="column.label"
-        #default="scope"
       >
-        <el-table-tree-item-dnd
-          :item="{
-            id: scope?.row?.id,
-            index: scope?.$index,
-            level: scope?.column?.level,
-            value: scope?.row,
-            hasChildren: !!scope?.row?.children?.length,
-          }"
-        />
+        <template v-if="column?.slots?.header" #header>
+          <slot :name="column?.slots?.header"></slot>
+        </template>
+        <template #default="scope">
+          <el-table-tree-item-dnd
+            :item="{
+              id: scope?.row?.id,
+              index: scope?.$index,
+              level: scope?.column?.level,
+              value: scope?.row,
+              hasChildren: !!scope?.row?.children?.length,
+            }"
+            :column="column"
+          >
+            <template v-if="column?.slots?.default" #[column?.slots?.default]>
+              <slot
+                :name="column?.slots?.default"
+                :row="scope?.row"
+                column="column"
+                :$index="scope?.$index"
+              ></slot>
+            </template>
+          </el-table-tree-item-dnd>
+        </template>
       </el-table-column>
     </el-table>
   </div>
