@@ -78,7 +78,7 @@ onMounted(() => {
     return;
   }
 
-  console.log("props", props.item);
+  // console.log("props", props.item);
 
   setTreeRecord(props.item?.index);
 

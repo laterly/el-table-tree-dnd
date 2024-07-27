@@ -60,7 +60,7 @@ const props = withDefaults(defineProps<Props>(), {
   loading: false,
 });
 
-console.log("props", props.data);
+// console.log("props", props.data);
 
 interface EmitsDNDProps {
   (
@@ -104,8 +104,8 @@ watchEffect((onCleanup) => {
         const target = location.current.dropTargets[0];
         const targetId = target.data.id as string;
 
-        console.log("source.data", source.data);
-        console.log("target.data", target);
+        // console.log("source.data", source.data);
+        // console.log("target.data", target);
 
         const instruction: Instruction | null = extractInstruction(target.data);
 
