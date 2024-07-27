@@ -1,7 +1,8 @@
 
 # ElTableTreeDnd 组件介绍
 
-`ElTableTreeDnd` 是一个基于 Element Plus 的 `el-table` 组件进行扩展的 Vue3 组件，它提供了树形表格的功能，并增加了拖拽节点（Drag and Drop）的能力。该组件适用于需要展示层级结构数据，并且允许用户通过拖拽来调整节点顺序或层级关系的场景。
+`ElTableTreeDnd` 是一个基于 Element Plus 的 `el-table` 组件进行扩展的 Vue3 组件，它提供了树形表格的功能，并增加了拖拽节点的能力。该组件适用于需要展示层级结构数据，并且允许用户通过拖拽来调整节点顺序或层级关系的场景。
+拖拽是基于 `@atlaskit/pragmatic-drag-and-drop` 库，用于提供跨浏览器的拖拽和放置功能。
 
 ## 特性
 
@@ -108,5 +109,12 @@ import ElTableTreeDnd from 'el-table-tree-dnd';
 | 方法名 | 说明 | 参数 |
 | --- | --- | --- |
 | getElTableExpose | 获取 el-table 实例，通常表格操作 | - |
+
+## 相关文档地址
+
+[查看 @atlaskit/pragmatic-drag-and-drop GitHub 仓库](https://github.com/atlassian/pragmatic-drag-and-drop)
+
+[查看 Element Plus 官方文档](https://element-plus.org)
+
 
 ## 示例

@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import ElTableTreeDnd from "./components/el-table-tree-dnd/el-table-tree-dnd.vue";
-import {
-  TableColumn,
-  TableRefExpose,
-} from "./components/el-table-tree-dnd/types";
+import ElTableTreeDnd, { TableColumn, TableRefExpose } from "el-table-tree-dnd";
 
 import { trees } from "./constants";
 
@@ -15,7 +11,6 @@ const columns = reactive<TableColumn[]>([
     prop: "index",
     type: "index",
     label: "序号",
-    
   },
   {
     prop: "selection",
@@ -67,7 +62,7 @@ const onSelectionChange = (data) => {
     @selection-change="onSelectionChange"
     :draggable="true"
     :pagination="{
-      total: 30
+      total: 30,
     }"
   >
     <template #stateHeader> 状态标题 </template>

@@ -1,8 +1,21 @@
 {
   "name": "el-table-tree-dnd",
   "description": "el-table支持树拖拽",
-  "version": "1.0.0",
+  "version": "0.1.2",
   "license": "Apache-2.0",
+  "main": "./dist/el-table-tree-dnd.umd.js",
+  "module": "./dist/el-table-tree-dnd.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/el-table-tree-dnd.es.js",
+      "require": "./dist/el-table-tree-dnd.umd.js"
+    }
+  },
+  "files": [
+    "dist/",
+    "package.json",
+    "README.md"
+  ],
   "scripts": {
     "start": "vite",
     "build": "vite build"
@@ -12,8 +25,8 @@
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3"
   },
   "peerDependencies": {
-    "vue": "^3.3.0",
-    "element-plus": "^2.7.0"
+    "element-plus": "^2.7.0",
+    "vue": "^3.3.0"
   },
   "keywords": [
     "el-table-tree-dnd",
