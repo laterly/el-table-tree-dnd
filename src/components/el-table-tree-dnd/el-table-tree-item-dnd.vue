@@ -21,7 +21,6 @@ import {
 import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview";
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
-import "./table-tree-item-dnd.css";
 import { treeRecordObj, setTreeRecord } from "./utils";
 import { TableColumn } from "./types";
 
@@ -39,6 +38,11 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const emits = defineEmits<{
+  // 节点开始拖拽时触发的事件
+  (e: "node-drag-start"): void;
+}>();
 
 const spanRef = ref();
 const isDragging = ref(false);
@@ -67,7 +71,7 @@ onMounted(() => {
   }
 
   setTreeRecord(props.item?.index);
-  console.log("进来了呀", currentElement);
+  
   const item = {
     ...props.item.value,
     level: props.item.level,
@@ -79,7 +83,9 @@ onMounted(() => {
       element: currentElement,
       getInitialData: () => item,
       onDragStart: () => {
+        console.log('开始')
         isDragging.value = true;
+        emits("node-drag-start");
       },
       onDrop: () => {
         isDragging.value = false;
@@ -119,11 +125,10 @@ onMounted(() => {
         });
       },
       canDrop: ({ source }) => {
-        console.log("source.data", source.data);
-        console.log("iem", item.id);
         return source.data.id !== item.id;
       },
       onDrag: ({ self }) => {
+        console.log("onDrag", self);
         instruction.value = extractInstruction(
           self.data
         ) as typeof instruction.value;
@@ -149,25 +154,25 @@ onBeforeUnmount(() => {
   dndFunction?.();
 });
 
-watchEffect(() => {
-  const rowElement = spanRef.value?.closest(".el-table__row") as HTMLDivElement;
+// watchEffect(() => {
+//   const rowElement = spanRef.value?.closest(".el-table__row") as HTMLDivElement;
 
-  rowElement?.classList?.add("relative");
-  if (isDragging.value) {
-    rowElement?.classList?.add("opacity-50");
-  } else {
-    rowElement?.classList?.remove("opacity-50");
-  }
+//   rowElement?.classList?.add("relative");
+//   if (isDragging.value) {
+//     rowElement?.classList?.add("opacity-50");
+//   } else {
+//     rowElement?.classList?.remove("opacity-50");
+//   }
 
-  // const cellElement = spanRef.value?.closest(
-  //   ".el-table__cell"
-  // ) as HTMLDivElement;
-  // if (instruction?.value) {
-  //   rowElement?.classList?.remove("relative");
-  // } else {
-  //   rowElement?.classList?.add("relative");
-  // }
-});
+//   // const cellElement = spanRef.value?.closest(
+//   //   ".el-table__cell"
+//   // ) as HTMLDivElement;
+//   // if (instruction?.value) {
+//   //   rowElement?.classList?.remove("relative");
+//   // } else {
+//   //   rowElement?.classList?.add("relative");
+//   // }
+// });
 </script>
 <template>
   <span ref="spanRef" :class="{ 'opacity-50': isDragging }">
@@ -175,17 +180,17 @@ watchEffect(() => {
       <slot :name="props.column?.slots?.default"></slot>
     </span>
     <span v-else class="pl-2">{{
-      props?.column?.formatter?.({
-        row: props.item?.value,
-        column: props.column,
-        $index: props.item?.index,
-      }) || props.item?.value?.[props.column?.field]
+      props?.column?.formatter?.(
+        props.item?.value,
+        props.column,
+        props.item?.index
+      ) || props.item?.value?.[props.column?.field]
     }}</span>
     <span
       v-if="instruction"
       class="absolute h-full w-full top-0 border-blue-500"
       :style="{
-        left: `${instruction?.currentLevel * instruction?.indentPerLevel}px`,
+        left: `5px`,
         width: `calc(100% - ${
           instruction?.currentLevel * instruction?.indentPerLevel
         }px)`,
@@ -198,3 +203,7 @@ watchEffect(() => {
     />
   </span>
 </template>
+
+<style lang="css" scoped>
+@import url('./table-tree-item-dnd.css');
+</style>

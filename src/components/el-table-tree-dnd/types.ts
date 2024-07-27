@@ -1,4 +1,7 @@
-import { TableProps as ElTableProps } from "element-plus";
+import {
+  type TableProps as ElTableProps,
+  type TableInstance,
+} from "element-plus";
 
 type NonNullableKey<K> = K extends null | undefined ? never : K;
 
@@ -7,15 +10,16 @@ export type Recordable<T = any, K extends string | number = string> = Record<
   T
 >;
 
+export type ElTableRef = TableInstance;
+
+export interface TableRefExpose {
+  getElTableExpose: () => Promise<ElTableRef>;
+}
+
 export interface TableColumn {
-  field: string;
+  prop?: string;
   label?: string;
-  type?: string;
-  /**
-   * 是否隐藏
-   */
-  hidden?: boolean;
-  children?: TableColumn[];
+  type?: "index" | "selection";
   slots?: {
     default?: string;
     header?: string;
@@ -25,17 +29,11 @@ export interface TableColumn {
   width?: string | number;
   minWidth?: string | number;
   fixed?: boolean | "left" | "right";
-  renderHeader?: (...args: any[]) => JSX.Element | null;
-  // sortable?: boolean
   sortMethod?: (...args: any[]) => number;
   sortBy?: string | string[] | ((...args: any[]) => string | string[]);
   sortOrders?: (string | null)[];
   resizable?: boolean;
-  formatter?: (props: {
-    row: Recordable;
-    column: TableColumn;
-    $index?: number;
-  }) => any;
+  formatter?: (row: Recordable, column: TableColumn, $index?: number) => any;
   showOverflowTooltip?: boolean;
   align?: "left" | "center" | "right";
   headerAlign?: "left" | "center" | "right";
