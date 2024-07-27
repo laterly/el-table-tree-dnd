@@ -110,11 +110,112 @@ import ElTableTreeDnd from 'el-table-tree-dnd';
 | --- | --- | --- |
 | getElTableExpose | 获取 el-table 实例，通常表格操作 | - |
 
+## 基本使用示例
+
+```vue
+<template>
+  <el-table-tree-dnd
+    :data="tableData"
+    :columns="columns"
+    @node-drop="handleNodeDrop"
+    @node-drag-start="handleNodeDragStart"
+  >
+    <template #stateHeader> 状态标题 </template>
+    <template #state="{ row }"> 状态:{{ row.state }} </template>
+  </el-table-tree-dnd>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import ElTableTreeDnd,{ Recordable } from 'el-table-tree-dnd';
+
+const tableData = ref<Recordable[]>([
+  {
+    id: 1,
+    title: "节点 1",
+    state:1,
+    children: [
+      {
+        id: 2,
+        title: "子节点 1-1",
+        state:2,
+        children: [
+          {
+            id: 5,
+            title: "子节点 1-1-1",
+            state:3,
+          },
+          {
+            id: 6,
+            title: "子节点 1-1-2",
+            state:4,
+          },
+        ],
+      },
+      {
+        id: 3,
+        title: "子节点 1-2",
+        state:5,
+      },
+    ],
+  },
+  {
+    id: 4,
+    title: "节点 2",
+    state:9,
+    children: [
+      {
+        id: 7,
+        title: "子节点 2-1",
+        state:8,
+      },
+      {
+        id: 8,
+        title: "子节点 2-2",
+        state:5,
+      },
+    ],
+  },
+]);
+
+const columns = ref([
+  {
+    prop: "title",
+    label: "标题",
+    formatter: (row) => {
+      return row?.title;
+    },
+  },
+  {
+    prop: "state",
+    label: "状态",
+    slots: {
+      default: "state",
+      header: "stateHeader",
+    },
+  }
+]);
+
+const handleNodeDrop = (data: Recordable[], source: Recordable, target: Recordable) => {
+  console.log('Node dropped:', data, source, target);
+  tableData.value = data;
+};
+
+const handleNodeDragStart = () => {
+  console.log('Node drag started');
+};
+
+</script>
+
+<style scoped>
+/* Add your styles here */
+</style>
+
+```
+
 ## 相关文档地址
 
 [查看 @atlaskit/pragmatic-drag-and-drop GitHub 仓库](https://github.com/atlassian/pragmatic-drag-and-drop)
 
 [查看 Element Plus 官方文档](https://element-plus.org)
 
-
-## 示例
