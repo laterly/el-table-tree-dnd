@@ -2,7 +2,7 @@
   "name": "el-table-tree-dnd",
   "description": "el-table支持树拖拽",
   "version": "1.0.0",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "start": "vite",
     "build": "vite build"

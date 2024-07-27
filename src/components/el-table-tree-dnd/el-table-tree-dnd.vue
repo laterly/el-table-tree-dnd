@@ -36,7 +36,6 @@ interface TableProps {
   // 是否展示分页
   pagination?: Pagination;
   loading?: boolean;
-  emptyText?: string;
 }
 
 type Props = DNDProps & TableProps;
@@ -58,12 +57,18 @@ const props = withDefaults(defineProps<Props>(), {
   headerAlign: "left",
   pageSize: 20,
   currentPage: 1,
-  emptyText: "暂无数据",
   loading: false,
 });
 
+console.log("props", props.data);
+
 interface EmitsDNDProps {
-  (e: "node-drop", data: Recordable[]): void; // 拖拽成功完成时触发的事件
+  (
+    e: "node-drop",
+    data: Recordable[],
+    source: Recordable,
+    target: Recordable
+  ): void; // 拖拽成功完成时触发的事件
   (e: "node-drag-start"): void; // 节点开始拖拽时触发的事件
 }
 
@@ -79,6 +84,14 @@ const emits = defineEmits<EmitsProps>();
 
 const tableRef = ref<ElTableRef>();
 
+const expandItem = (row: Recordable) => {
+  tableRef.value?.toggleRowExpansion(row, true);
+};
+
+const closeItem = (row: Recordable) => {
+  tableRef.value?.toggleRowExpansion(row, false);
+};
+
 watchEffect((onCleanup) => {
   const dndCleanup = combine(
     monitorForElements({
@@ -91,6 +104,9 @@ watchEffect((onCleanup) => {
         const target = location.current.dropTargets[0];
         const targetId = target.data.id as string;
 
+        console.log("source.data", source.data);
+        console.log("target.data", target);
+
         const instruction: Instruction | null = extractInstruction(target.data);
 
         if (instruction !== null) {
@@ -102,7 +118,7 @@ watchEffect((onCleanup) => {
               targetId,
             }) ?? [];
 
-          emits("node-drop", treesData);
+          emits("node-drop", treesData, source.data);
         }
       },
     })
@@ -204,11 +220,13 @@ defineExpose<TableRefExpose>({
             :item="{
               id: scope?.row?.id,
               index: scope?.$index,
-              level: scope?.column?.level,
+              level: scope?.treeNode?.level,
               value: scope?.row,
               hasChildren: !!scope?.row?.children?.length,
             }"
             :column="column"
+            :expand-item="expandItem"
+            :close-item="closeItem"
             @node-drag-start="
               () => {
                 emits('node-drag-start');

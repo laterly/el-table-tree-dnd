@@ -140,6 +140,8 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
   const item = tree.find(data, action.itemId);
   if (!item) return data;
 
+  console.log('action',action)
+
   if (action.type === "instruction") {
     const instruction = action.instruction;
 
@@ -170,6 +172,9 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
 
     if (instruction.type === "reorder-below") {
       let result = tree.remove(data, action.itemId);
+      console.log('应该是这里吧',result)
+      console.log('item',item)
+      console.log('action item',action)
       result = tree.insertAfter(result, action.targetId, item);
       return result;
     }
@@ -177,6 +182,7 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
     if (instruction.type === "make-child") {
       let result = tree.remove(data, action.itemId);
       result = tree.insertChild(result, action.targetId, item);
+      
       return result;
     }
 
@@ -186,7 +192,7 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
   }
 
   if (action.type === "modal-move") {
-    let result = tree.remove(data, item.id);
+    let result = tree.remove(data, item?.id!);
 
     const siblingItems = getChildItems(result, action.targetId) ?? [];
 

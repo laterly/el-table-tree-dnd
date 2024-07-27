@@ -6,7 +6,8 @@ import {
   onMounted,
   unref,
   onBeforeUnmount,
-  watchEffect,
+  computed,
+  nextTick,
 } from "vue";
 import {
   draggable,
@@ -22,7 +23,7 @@ import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/eleme
 import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { treeRecordObj, setTreeRecord } from "./utils";
-import { TableColumn } from "./types";
+import { Recordable, TableColumn } from "./types";
 
 interface ItemProps {
   id: string | number;
@@ -35,6 +36,8 @@ interface ItemProps {
 interface Props {
   column: TableColumn;
   item: ItemProps;
+  expandItem?: (row: Recordable) => void;
+  closeItem?: (row: Recordable) => void;
 }
 
 const props = defineProps<Props>();
@@ -46,6 +49,11 @@ const emits = defineEmits<{
 
 const spanRef = ref();
 const isDragging = ref(false);
+
+const mode = computed(() => {
+  if (props.item.hasChildren) return "expanded";
+  return "standard";
+});
 
 const instruction = ref<Extract<
   Instruction,
@@ -70,82 +78,92 @@ onMounted(() => {
     return;
   }
 
+  console.log("props", props.item);
+
   setTreeRecord(props.item?.index);
-  
-  const item = {
-    ...props.item.value,
-    level: props.item.level,
-    id: props.item.id,
-  };
 
   dndFunction = combine(
     draggable({
       element: currentElement,
-      getInitialData: () => item,
+      getInitialData: () => ({
+        ...props.item.value,
+        level: props.item.level,
+        id: props.item.id,
+      }),
       onDragStart: () => {
-        console.log('开始')
         isDragging.value = true;
+        props?.closeItem?.(props.item.value);
         emits("node-drag-start");
       },
       onDrop: () => {
         isDragging.value = false;
+        props?.expandItem?.(props.item.value);
       },
-      onGenerateDragPreview({ nativeSetDragImage }) {
-        setCustomNativeDragPreview({
-          getOffset: pointerOutsideOfPreview({ x: "16px", y: "8px" }),
-          render: ({ container }) => {
-            return render(
-              h(
-                "div",
-                {
-                  class:
-                    "bg-white text-blackA11 rounded-md text-sm font-medium px-3 py-1.5",
-                },
-                item.id
-              ),
-              container
-            );
-          },
-          nativeSetDragImage,
-        });
-      },
+      // onGenerateDragPreview({ nativeSetDragImage }) {
+      //   setCustomNativeDragPreview({
+      //     getOffset: pointerOutsideOfPreview({ x: "16px", y: "8px" }),
+      //     render: ({ container }) => {
+      //       return render(
+      //         h(
+      //           "div",
+      //           {
+      //             class:
+      //               "bg-white text-blackA11 rounded-md text-sm font-medium px-3 py-1.5",
+      //           },
+      //           props.item.id
+      //         ),
+      //         container
+      //       );
+      //     },
+      //     nativeSetDragImage,
+      //   });
+      // },
     }),
 
     dropTargetForElements({
       element: currentElement,
       getData: ({ input, element }) => {
-        const data = { id: item.id };
+        const data = { id: props.item.id };
         return attachInstruction(data, {
           input,
           element,
           indentPerLevel: 16,
           currentLevel: props.item.level,
-          mode: "standard",
+          mode: mode.value,
           block: [],
         });
       },
       canDrop: ({ source }) => {
-        return source.data.id !== item.id;
+        return source.data.id !== props.item.id;
       },
       onDrag: ({ self }) => {
-        console.log("onDrag", self);
         instruction.value = extractInstruction(
           self.data
         ) as typeof instruction.value;
+      },
+      onDragEnter: ({ source }) => {
+        if (source.data.id !== props.item.id) {
+          props?.expandItem?.(props.item?.value);
+        }
       },
 
       onDragLeave: () => {
         instruction.value = null;
       },
-      onDrop: () => {
+      onDrop: ({ location }) => {
         instruction.value = null;
+        if (location.current.dropTargets[0].data.id === props.item.id) {
+          nextTick(() => {
+            props?.expandItem?.(props.item?.value);
+          });
+        }
       },
       getIsSticky: () => true,
     }),
 
     monitorForElements({
       canMonitor: ({ source }) => {
-        return source.data.id !== item.id;
+        return source.data.id !== props.item.id;
       },
     })
   );
@@ -154,25 +172,6 @@ onBeforeUnmount(() => {
   dndFunction?.();
 });
 
-// watchEffect(() => {
-//   const rowElement = spanRef.value?.closest(".el-table__row") as HTMLDivElement;
-
-//   rowElement?.classList?.add("relative");
-//   if (isDragging.value) {
-//     rowElement?.classList?.add("opacity-50");
-//   } else {
-//     rowElement?.classList?.remove("opacity-50");
-//   }
-
-//   // const cellElement = spanRef.value?.closest(
-//   //   ".el-table__cell"
-//   // ) as HTMLDivElement;
-//   // if (instruction?.value) {
-//   //   rowElement?.classList?.remove("relative");
-//   // } else {
-//   //   rowElement?.classList?.add("relative");
-//   // }
-// });
 </script>
 <template>
   <span ref="spanRef" :class="{ 'opacity-50': isDragging }">
@@ -190,7 +189,7 @@ onBeforeUnmount(() => {
       v-if="instruction"
       class="absolute h-full w-full top-0 border-blue-500"
       :style="{
-        left: `5px`,
+        left: `${instruction?.currentLevel * instruction?.indentPerLevel}px`,
         width: `calc(100% - ${
           instruction?.currentLevel * instruction?.indentPerLevel
         }px)`,
@@ -205,5 +204,5 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="css" scoped>
-@import url('./table-tree-item-dnd.css');
+@import url("./table-tree-item-dnd.css");
 </style>
