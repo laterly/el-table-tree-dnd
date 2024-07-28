@@ -1,0 +1,3 @@
+packages:
+  - "packages/*" # 子项目的目录模式
+  - "example" # 子项目的目录模式

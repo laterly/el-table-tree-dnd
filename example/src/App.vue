@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import ElTableTreeDnd, { TableColumn, TableRefExpose } from "./lib/el-table-tree-dnd";
+import ElTableTreeDnd, { TableColumn, TableRefExpose } from "el-table-tree-dnd";
 
 import { trees } from "./constants";
 

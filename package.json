@@ -1,32 +1,18 @@
 {
-  "name": "el-table-tree-dnd",
+  "name": "el-table-tree-workspace",
   "description": "el-table支持树拖拽",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "license": "Apache-2.0",
-  "main": "./dist/el-table-tree-dnd.umd.js",
-  "module": "./dist/el-table-tree-dnd.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/el-table-tree-dnd.es.js",
-      "require": "./dist/el-table-tree-dnd.umd.js"
-    }
-  },
-  "files": [
-    "dist/",
-    "package.json",
-    "README.md"
-  ],
+  "private": true,
   "scripts": {
-    "start": "vite",
-    "build": "vite build"
+    "start": "concurrently \"npm run start:lib\" \"sleep 3 && npm run start:example\" --raw --kill-others",
+    "start:lib": "pnpm -C packages/el-table-tree-dnd start",
+    "start:example": "pnpm -C example start",
+    "build:lib": "pnpm -C packages/el-table-tree-dnd build",
+    "build:example": "pnpm -C example build"
   },
   "dependencies": {
-    "@atlaskit/pragmatic-drag-and-drop": "^1.1.11",
-    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.0.3"
-  },
-  "peerDependencies": {
-    "element-plus": "^2.7.0",
-    "vue": "^3.3.0"
+    "el-table-tree-dnd": "workspace:^"
   },
   "keywords": [
     "el-table-tree-dnd",
@@ -39,10 +25,7 @@
     "node": ">=14.0.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "latest",
-    "autoprefixer": "latest",
-    "postcss": "latest",
-    "vite": "latest",
-    "vue-tsc": "latest"
+    "concurrently": "^8.2.2",
+    "npm-run-all": "^4.1.5"
   }
 }

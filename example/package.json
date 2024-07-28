@@ -1,0 +1,31 @@
+{
+  "name": "el-table-tree-example",
+  "description": "el-table支持树拖拽",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "element-plus": "^2.7.0",
+    "vue": "^3.3.0"
+  },
+  "keywords": [
+    "el-table-tree-dnd",
+    "el-table",
+    "tree",
+    "easy",
+    "pragmatic-drag-and-drop"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "vite": "latest",
+    "vue-tsc": "latest"
+  }
+}
