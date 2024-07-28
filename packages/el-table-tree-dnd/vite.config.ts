@@ -8,7 +8,7 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: './index.ts', // 这里指定了入口文件
+      entry: './src/index.ts', // 这里指定了入口文件
       name: 'ElTableTreeDnd',
       fileName: (format) => `el-table-tree-dnd.${format}.js`
     },
