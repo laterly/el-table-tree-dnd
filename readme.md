@@ -31,11 +31,10 @@ npm install --save el-table-tree-dnd
 import ElTableTreeDnd from 'el-table-tree-dnd';
 ```
 
-## 属性
+## 表格属性
 
 | 属性名 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| draggable | 是否开启拖拽节点功能 | boolean | true |
 | data | 表格数据 | Recordable[] | [] |
 | columns | 表头数据 | TableColumn[] | [] |
 | rowKey | 行数据的 Key，用来优化 Table 的渲染 | string | 'id' |
@@ -86,6 +85,35 @@ import ElTableTreeDnd from 'el-table-tree-dnd';
 
 请注意，以上属性中，部分属性（如 `sortMethod`、`sortBy`、`sortOrders`）需要与 `el-table` 的 `sortable` 属性配合使用。
 
+## 表格事件
+
+| 事件名 | 说明 | 回调参数 |
+| --- | --- | --- |
+| selection-change | 改变selection | (data: Recordable[]) |
+| update:pageSize | 更新每页显示条目个数 | (num: number) |
+| update:currentPage | 更新当前页码 | (num: number) |
+
+## 表格插槽
+
+| 插槽名 | 说明 | 插槽作用域参数 |
+| --- | --- | --- |
+| column.slots.header | 表头插槽 | - |
+| column.slots.default | 列默认插槽 | { row, column, $index } |
+
+## 表格方法
+
+| 方法名 | 说明 | 参数 |
+| --- | --- | --- |
+| getElTableExpose | 获取 el-table 实例，通常表格操作 | - |
+
+## 拖拽属性
+
+| 属性名 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| draggable | 是否开启拖拽节点功能 | boolean | true |
+| allow-drag | 允许拖拽节点时触发的事件 | (dragSource: Recordable) |
+| allow-drop | 允许放置节点时触发的事件 | (dragSource: Recordable, dropTarget: Recordable) |
+
 ## 拖拽事件
 
 | 事件名 | 说明 | 回调参数 |
@@ -97,26 +125,7 @@ import ElTableTreeDnd from 'el-table-tree-dnd';
 | node-drag-over | 拖拽操作在目标元素上移动时触发 | (dragSource: Recordable, dropTarget: Recordable) |
 | node-drag-end | 拖拽操作完成时触发 | (dragSource: Recordable, dropTarget: Recordable) |
 
-## 表格事件
 
-| 事件名 | 说明 | 回调参数 |
-| --- | --- | --- |
-| selection-change | 改变selection | (data: Recordable[]) |
-| update:pageSize | 更新每页显示条目个数 | (num: number) |
-| update:currentPage | 更新当前页码 | (num: number) |
-
-## 插槽
-
-| 插槽名 | 说明 | 插槽作用域参数 |
-| --- | --- | --- |
-| column.slots.header | 表头插槽 | - |
-| column.slots.default | 列默认插槽 | { row, column, $index } |
-
-## 方法
-
-| 方法名 | 说明 | 参数 |
-| --- | --- | --- |
-| getElTableExpose | 获取 el-table 实例，通常表格操作 | - |
 
 ## 基本使用示例
 
