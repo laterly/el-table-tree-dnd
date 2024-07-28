@@ -25,6 +25,11 @@
     "node": ">=14.0.0"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "@vitejs/plugin-vue": "latest",
+    "autoprefixer": "latest",
+    "concurrently": "^8.2.2",
+    "postcss": "latest",
+    "vite": "latest",
+    "vue-tsc": "latest"
   }
 }

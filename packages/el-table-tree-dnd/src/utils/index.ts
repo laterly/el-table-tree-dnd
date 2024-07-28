@@ -1,5 +1,5 @@
 import type { Instruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
-import { Recordable } from "./types";
+import { Recordable } from "../types";
 
 export interface TreeItem extends Recordable {
   id?: string;
@@ -102,7 +102,7 @@ export const tree = {
   },
   find(data: TreeItem[], itemId: string): TreeItem | undefined {
     for (const item of data) {
-      console.log("find", item, itemId);
+      // console.log("find", item, itemId);
       if (item.id === itemId) return item;
 
       if (tree.hasChildren(item)) {
@@ -140,7 +140,7 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
   const item = tree.find(data, action.itemId);
   if (!item) return data;
 
-  console.log('action',action)
+  // console.log('action',action)
 
   if (action.type === "instruction") {
     const instruction = action.instruction;
@@ -172,9 +172,9 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
 
     if (instruction.type === "reorder-below") {
       let result = tree.remove(data, action.itemId);
-      console.log('应该是这里吧',result)
-      console.log('item',item)
-      console.log('action item',action)
+      // console.log('应该是这里吧',result)
+      // console.log('item',item)
+      // console.log('action item',action)
       result = tree.insertAfter(result, action.targetId, item);
       return result;
     }
@@ -215,14 +215,14 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
       /**
        * If the position selected is the end, we insert after the last item.
        */
-      result = tree.insertAfter(result, relativeTo.title, item);
+      result = tree.insertAfter(result, relativeTo.id!, item);
     } else {
       const relativeTo = siblingItems[action.index];
       /**
        * Otherwise we insert before the existing item in the given position.
        * This results in the new item being in that position.
        */
-      result = tree.insertBefore(result, relativeTo.title, item);
+      result = tree.insertBefore(result, relativeTo.id!, item);
     }
 
     return result;

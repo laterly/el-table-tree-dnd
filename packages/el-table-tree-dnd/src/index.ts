@@ -5,6 +5,8 @@ ElTableTreeDnd.install = (app) => {
   app.component(ElTableTreeDnd.name, ElTableTreeDnd);
 };
 
+
+export * from "./types/index";
+
 export default ElTableTreeDnd;
 
-export * from "./types";

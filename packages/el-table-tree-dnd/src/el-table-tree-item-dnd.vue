@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {
-  h,
   ref,
-  render,
   onMounted,
   unref,
   onBeforeUnmount,
@@ -19,8 +17,8 @@ import {
   attachInstruction,
   extractInstruction,
 } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
-import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview";
-import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
+// import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview";
+// import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { treeRecordObj, setTreeRecord } from "./utils";
 import { Recordable, TableColumn } from "./types";
@@ -38,13 +36,22 @@ interface Props {
   item: ItemProps;
   expandItem?: (row: Recordable) => void;
   closeItem?: (row: Recordable) => void;
+  allowDrag?: (props: { dragSource: Recordable }) => undefined | boolean;
+  allowDrop?: (props: {
+    dragSource: Recordable;
+    dropTarget: Recordable;
+  }) => undefined | boolean;
 }
 
 const props = defineProps<Props>();
 
 const emits = defineEmits<{
   // 节点开始拖拽时触发的事件
-  (e: "node-drag-start"): void;
+  (e: "node-drag-start", source: Recordable): void;
+  (e: "node-drag-enter", source: Recordable, target: Recordable): void;
+  (e: "node-drag-leave", source: Recordable, target: Recordable): void;
+  (e: "node-drag-over", source: Recordable, target: Recordable): void;
+  (e: "node-drag-end", source: Recordable, target: Recordable): void;
 }>();
 
 const spanRef = ref();
@@ -90,10 +97,18 @@ onMounted(() => {
         level: props.item.level,
         id: props.item.id,
       }),
-      onDragStart: () => {
+      onDragStart: (data) => {
+        // console.log("data", data);
         isDragging.value = true;
         props?.closeItem?.(props.item.value);
-        emits("node-drag-start");
+        emits("node-drag-start", data.source);
+      },
+      canDrag() {
+        return props?.allowDrag && typeof props.allowDrag === "function"
+          ? !!props?.allowDrag?.({
+              dragSource: props.item.value,
+            })
+          : true;
       },
       onDrop: () => {
         isDragging.value = false;
@@ -134,29 +149,55 @@ onMounted(() => {
         });
       },
       canDrop: ({ source }) => {
-        return source.data.id !== props.item.id;
+        return props?.allowDrop && typeof props.allowDrop === "function"
+          ? !!props?.allowDrop?.({
+              dragSource: source?.data,
+              dropTarget: props.item?.value,
+            })
+          : source.data.id !== props.item.id;
       },
-      onDrag: ({ self }) => {
+      onDrag: ({ self, source, location }) => {
         instruction.value = extractInstruction(
           self.data
         ) as typeof instruction.value;
+
+        emits(
+          "node-drag-over",
+          source?.data,
+          location?.current?.dropTargets?.[0]?.data
+        );
       },
-      onDragEnter: ({ source }) => {
+      onDragEnter: ({ source, location }) => {
         if (source.data.id !== props.item.id) {
           props?.expandItem?.(props.item?.value);
         }
+        emits(
+          "node-drag-enter",
+          source?.data,
+          location?.current?.dropTargets?.[0]?.data
+        );
       },
 
-      onDragLeave: () => {
+      onDragLeave: ({ source, location }) => {
         instruction.value = null;
+        emits(
+          "node-drag-leave",
+          source?.data,
+          location?.current?.dropTargets?.[0]?.data
+        );
       },
-      onDrop: ({ location }) => {
+      onDrop: ({ source, location, self }) => {
         instruction.value = null;
         if (location.current.dropTargets[0].data.id === props.item.id) {
           nextTick(() => {
             props?.expandItem?.(props.item?.value);
           });
         }
+        emits(
+          "node-drag-end",
+          source?.data,
+          location?.current?.dropTargets?.[0]?.data
+        );
       },
       getIsSticky: () => true,
     }),
@@ -171,7 +212,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   dndFunction?.();
 });
-
 </script>
 <template>
   <span ref="spanRef" :class="{ 'opacity-50': isDragging }">
@@ -203,6 +243,6 @@ onBeforeUnmount(() => {
   </span>
 </template>
 
-<style lang="css" scoped>
+<style lang="css">
 @import url("./table-tree-item-dnd.css");
 </style>

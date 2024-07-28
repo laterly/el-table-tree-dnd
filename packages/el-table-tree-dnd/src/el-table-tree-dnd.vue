@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watchEffect, ref, nextTick, computed, watch } from "vue";
+import { watchEffect, ref, nextTick, computed, watch, toRaw } from "vue";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import {
@@ -7,7 +7,7 @@ import {
   extractInstruction,
 } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
 import ElTableTreeItemDnd from "./el-table-tree-item-dnd.vue";
-import { updateTree } from "./utils";
+import { updateTree, tree } from "./utils";
 import {
   Recordable,
   TableColumn,
@@ -18,6 +18,11 @@ import {
 
 interface DNDProps {
   draggable?: boolean; // 是否开启拖拽节点功能
+  allowDrag?: (props: { dragSource: Recordable }) => undefined | boolean;
+  allowDrop?: (props: {
+    dragSource: Recordable;
+    dropTarget: Recordable;
+  }) => undefined | boolean; // 是否允许放置
 }
 
 interface TableProps {
@@ -63,13 +68,43 @@ const props = withDefaults(defineProps<Props>(), {
 // console.log("props", props.data);
 
 interface EmitsDNDProps {
+  (e: "node-drag-start", props: { dragSource: Recordable }): void; // 节点开始拖拽时触发的事件
   (
     e: "node-drop",
-    data: Recordable[],
-    source: Recordable,
-    target: Recordable
+    props: {
+      nodeData: Recordable[];
+      dragSource: Recordable;
+      dropTarget: Recordable;
+    }
   ): void; // 拖拽成功完成时触发的事件
-  (e: "node-drag-start"): void; // 节点开始拖拽时触发的事件
+  (
+    e: "node-drag-enter",
+    props: {
+      dragSource: Recordable;
+      dropTarget: Recordable;
+    }
+  );
+  (
+    e: "node-drag-leave",
+    props: {
+      dragSource: Recordable;
+      dropTarget: Recordable;
+    }
+  );
+  (
+    e: "node-drag-over",
+    props: {
+      dragSource: Recordable;
+      dropTarget: Recordable;
+    }
+  );
+  (
+    e: "node-drag-end",
+    props: {
+      dragSource: Recordable;
+      dropTarget: Recordable;
+    }
+  );
 }
 
 interface EmitsTableProps {
@@ -104,9 +139,6 @@ watchEffect((onCleanup) => {
         const target = location.current.dropTargets[0];
         const targetId = target.data.id as string;
 
-        // console.log("source.data", source.data);
-        // console.log("target.data", target);
-
         const instruction: Instruction | null = extractInstruction(target.data);
 
         if (instruction !== null) {
@@ -118,7 +150,13 @@ watchEffect((onCleanup) => {
               targetId,
             }) ?? [];
 
-          emits("node-drop", treesData, source.data);
+          const dropData = tree.find(toRaw(props.data), targetId);
+
+          emits("node-drop", {
+            nodeData: treesData,
+            dragSource: source.data!,
+            dropTarget: dropData!,
+          });
         }
       },
     })
@@ -128,6 +166,22 @@ watchEffect((onCleanup) => {
     dndCleanup();
   });
 });
+
+const handleNodeDragStart = (source) => {
+  emits("node-drag-start", { dragSource: source });
+};
+
+const handleNodeDrag = (
+  source,
+  target,
+  type: "enter" | "leave" | "over" | "end"
+) => {
+  const dropData = tree.find(toRaw(props.data), target?.id);
+  emits(`node-drag-${type}` as keyof EmitsDNDProps, {
+    dragSource: source!,
+    dropTarget: dropData!,
+  });
+};
 
 const pageSize = ref(20);
 const currentPage = ref(1);
@@ -227,11 +281,29 @@ defineExpose<TableRefExpose>({
             :column="column"
             :expand-item="expandItem"
             :close-item="closeItem"
-            @node-drag-start="
-              () => {
-                emits('node-drag-start');
+            @node-drag-start="handleNodeDragStart"
+            @node-drag-enter="
+              (source, target) => {
+                handleNodeDrag(source, target, 'enter');
               }
             "
+            @node-drag-leave="
+              (source, target) => {
+                handleNodeDrag(source, target, 'leave');
+              }
+            "
+            @node-drag-over="
+              (source, target) => {
+                handleNodeDrag(source, target, 'over');
+              }
+            "
+            @node-drag-end="
+              (source, target) => {
+                handleNodeDrag(source, target, 'end');
+              }
+            "
+            :allow-drag="props?.allowDrag"
+            :allow-drop="props?.allowDrop"
           >
             <template v-if="column?.slots?.default" #[column?.slots?.default]>
               <slot

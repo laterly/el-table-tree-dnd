@@ -16,7 +16,7 @@ export interface TableRefExpose {
   getElTableExpose: () => Promise<ElTableRef>;
 }
 
-export interface TableColumn {
+export interface TableColumn extends Omit<Partial<ElTableProps<any[]>>, ""> {
   prop?: string;
   label?: string;
   type?: "index" | "selection";
