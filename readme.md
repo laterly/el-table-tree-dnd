@@ -86,13 +86,21 @@ import ElTableTreeDnd from 'el-table-tree-dnd';
 
 请注意，以上属性中，部分属性（如 `sortMethod`、`sortBy`、`sortOrders`）需要与 `el-table` 的 `sortable` 属性配合使用。
 
-
-## 事件
+# 拖拽事件
 
 | 事件名 | 说明 | 回调参数 |
 | --- | --- | --- |
 | node-drop | 拖拽成功完成时触发的事件 | (data: Recordable[], source: Recordable, target: Recordable) |
-| node-drag-start | 节点开始拖拽时触发的事件 | - |
+| node-drag-start | 节点开始拖拽时触发的事件 | (dragSource: Recordable) |
+| node-drag-enter | 拖拽操作进入目标元素时触发 | (dragSource: Recordable, dropTarget: Recordable) |
+| node-drag-leave | 拖拽操作离开目标元素时触发 | (dragSource: Recordable, dropTarget: Recordable) |
+| node-drag-over | 拖拽操作在目标元素上移动时触发 | (dragSource: Recordable, dropTarget: Recordable) |
+| node-drag-end | 拖拽操作完成时触发 | (dragSource: Recordable, dropTarget: Recordable) |
+
+## 表格事件
+
+| 事件名 | 说明 | 回调参数 |
+| --- | --- | --- |
 | selection-change | 改变selection | (data: Recordable[]) |
 | update:pageSize | 更新每页显示条目个数 | (num: number) |
 | update:currentPage | 更新当前页码 | (num: number) |
