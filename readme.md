@@ -27,6 +27,7 @@
 [`example`](./example/src/views/example1.vue)
 ```bash
 git clone https://github.com/laterly/el-table-tree-dnd.git
+cd el-table-tree-dnd
 pnpm install
 pnpm dev
 ```
