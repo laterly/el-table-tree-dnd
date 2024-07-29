@@ -1,7 +1,6 @@
 import type { Instruction } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
-import { Recordable } from "../types";
 
-export interface TreeItem extends Recordable {
+export interface TreeItem {
   id?: string;
   children?: TreeItem[];
 }
@@ -27,117 +26,170 @@ export type TreeAction =
     }
   | { type: "modal-move"; itemId: string; targetId: string; index: number };
 
-export const tree = {
-  remove(data: TreeItem[], id: string): TreeItem[] {
+export interface TreeItem {
+  id?: string;
+  children?: TreeItem[];
+  // 可以在这里添加其他属性，例如 isOpen、title 等
+}
+
+export const treeHandler = {
+  remove<T extends TreeItem>(data: T[], id: string): T[] {
+    if (!Array.isArray(data) || !id) {
+      throw new Error("Invalid input for remove method");
+    }
     return data
       .filter((item) => item.id !== id)
-      .map((item) => {
-        if (tree.hasChildren(item)) {
-          return {
-            ...item,
-            children: tree.remove(item.children ?? [], id),
-          };
-        }
-        return item;
-      });
+      .map((item) => ({
+        ...item,
+        children: item.children
+          ? treeHandler.remove(item.children, id)
+          : undefined,
+      }));
   },
-  insertBefore(
-    data: TreeItem[],
+  insertBefore<T extends TreeItem>(
+    data: T[],
     targetId: string,
-    newItem: TreeItem
-  ): TreeItem[] {
-    return data.flatMap((item) => {
-      if (item.id === targetId) return [newItem, item];
-
-      if (tree.hasChildren(item)) {
-        return {
-          ...item,
-          children: tree.insertBefore(item.children ?? [], targetId, newItem),
-        };
-      }
-      return item;
-    });
-  },
-  insertAfter(
-    data: TreeItem[],
-    targetId: string,
-    newItem: TreeItem
-  ): TreeItem[] {
-    return data.flatMap((item) => {
-      if (item.id === targetId) return [item, newItem];
-
-      if (tree.hasChildren(item)) {
-        return {
-          ...item,
-          children: tree.insertAfter(item.children ?? [], targetId, newItem),
-        };
-      }
-
-      return item;
-    });
-  },
-  insertChild(
-    data: TreeItem[],
-    targetId: string,
-    newItem: TreeItem
-  ): TreeItem[] {
-    return data.flatMap((item) => {
+    newItem: T
+  ): T[] {
+    if (!Array.isArray(data) || !targetId || !newItem) {
+      throw new Error("Invalid input for insertBefore method");
+    }
+    return data.reduce<T[]>((acc, item) => {
       if (item.id === targetId) {
-        // already a parent: add as first child
+        acc.push(newItem, item);
+      } else {
+        acc.push({
+          ...item,
+          children: item.children
+            ? treeHandler.insertBefore(item.children, targetId, newItem)
+            : undefined,
+        });
+      }
+      return acc;
+    }, []);
+  },
+  insertAfter<T extends TreeItem>(
+    data: T[],
+    targetId: string,
+    newItem: T
+  ): T[] {
+    if (!Array.isArray(data) || !targetId || !newItem) {
+      throw new Error("Invalid input for insertAfter method");
+    }
+    return data.reduce<T[]>((acc, item) => {
+      if (item.id === targetId) {
+        acc.push(item, newItem);
+      } else {
+        acc.push({
+          ...item,
+          children: item.children
+            ? treeHandler.insertAfter(item.children, targetId, newItem)
+            : undefined,
+        });
+      }
+      return acc;
+    }, []);
+  },
+  insertChild<T extends TreeItem>(
+    data: T[],
+    targetId: string,
+    newItem: T
+  ): T[] {
+    if (!Array.isArray(data) || !targetId || !newItem) {
+      throw new Error("Invalid input for insertChild method");
+    }
+    return data.map((item) => {
+      if (item.id === targetId) {
         return {
           ...item,
-          // opening item so you can see where item landed
-          isOpen: true,
-          children: [newItem, ...(item.children ?? [])],
+          children: [...(item.children ?? []), newItem],
         };
       }
-
-      if (!tree.hasChildren(item)) return item;
-
       return {
         ...item,
-        children: tree.insertChild(item.children ?? [], targetId, newItem),
+        children: item.children
+          ? treeHandler.insertChild(item.children, targetId, newItem)
+          : undefined,
       };
     });
   },
-  find(data: TreeItem[], itemId: string): TreeItem | undefined {
+  find<T extends TreeItem>(data: T[], itemId: string): T | undefined {
+    if (!Array.isArray(data) || !itemId) {
+      throw new Error("Invalid input for find method");
+    }
     for (const item of data) {
-      // console.log("find", item, itemId);
       if (item.id === itemId) return item;
-
-      if (tree.hasChildren(item)) {
-        const result = tree.find(item.children ?? [], itemId);
-        if (result) return result;
+      if (item.children) {
+        const result = treeHandler.find(item.children, itemId);
+        if (result) return result as T;
       }
     }
+    return undefined;
   },
-  getPathToItem({
+  getPathToItem<T extends TreeItem>({
     current,
     targetId,
     parentIds = [],
   }: {
-    current: TreeItem[];
+    current: T[];
     targetId: string;
     parentIds?: string[];
   }): string[] | undefined {
-    for (const item of current) {
-      if (item.id === targetId) return parentIds;
-
-      const nested = tree.getPathToItem({
-        current: item.children ?? [],
-        targetId,
-        parentIds: [...parentIds, item.id],
-      });
-      if (nested) return nested;
+    if (!Array.isArray(current) || !targetId || !parentIds) {
+      throw new Error("Invalid input for getPathToItem method");
     }
+    for (const item of current) {
+      if (item.id === targetId) return [...parentIds, item.id];
+      if (item.children) {
+        const nested = treeHandler.getPathToItem({
+          current: item.children,
+          targetId,
+          parentIds: [...parentIds, item.id]?.filter(
+            (item) => typeof item !== "undefined"
+          ),
+        });
+        if (nested) return nested;
+      }
+    }
+    return undefined;
   },
-  hasChildren(item: TreeItem): boolean {
-    return (item.children ?? []).length > 0;
+  hasChildren<T extends TreeItem>(item: T) {
+    return item.children && item.children.length > 0;
+  },
+  getAllIds<T extends TreeItem>(tree: T[]): string[] {
+    if (!Array.isArray(tree)) {
+      throw new Error("Invalid input for getAllIds method");
+    }
+    let ids: string[] = [];
+
+    function traverse(node: T) {
+      if (node.id) {
+        ids.push(node.id); // 收集当前节点的 id
+      }
+      if (treeHandler.hasChildren(node)) {
+        // 如果有子节点，递归遍历子节点
+        node.children?.forEach((child: T) => traverse(child));
+      }
+    }
+
+    tree.forEach((node) => traverse(node)); // 遍历树中的每个根节点
+    return ids;
+  },
+  traverse<T extends TreeItem>(tree: T[], callback: (node: T) => void): void {
+    if (!Array.isArray(tree)) {
+      throw new Error("Invalid input for traverseTree method");
+    }
+    tree.forEach((node) => {
+      callback(node); // 调用回调函数
+      if (treeHandler.hasChildren(node)) {
+        treeHandler.traverse(node.children ?? [], callback); // 递归遍历子节点
+      }
+    });
   },
 };
 
-export function updateTree(data: TreeItem[], action: TreeAction) {
-  const item = tree.find(data, action.itemId);
+export function updateTree<T extends TreeItem>(data: T[], action: TreeAction) {
+  const item = treeHandler.find(data, action.itemId);
   if (!item) return data;
 
   // console.log('action',action)
@@ -146,7 +198,7 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
     const instruction = action.instruction;
 
     if (instruction.type === "reparent") {
-      const path = tree.getPathToItem({
+      const path = treeHandler.getPathToItem({
         current: data,
         targetId: action.targetId,
       });
@@ -156,8 +208,8 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
       }
 
       const desiredId = path[instruction.desiredLevel];
-      let result = tree.remove(data, action.itemId);
-      result = tree.insertAfter(result, desiredId, item);
+      let result = treeHandler.remove(data, action.itemId);
+      result = treeHandler.insertAfter(result, desiredId, item);
       return result;
     }
 
@@ -165,24 +217,24 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
     if (action.itemId === action.targetId) return data;
 
     if (instruction.type === "reorder-above") {
-      let result = tree.remove(data, action.itemId);
-      result = tree.insertBefore(result, action.targetId, item);
+      let result = treeHandler.remove(data, action.itemId);
+      result = treeHandler.insertBefore(result, action.targetId, item);
       return result;
     }
 
     if (instruction.type === "reorder-below") {
-      let result = tree.remove(data, action.itemId);
+      let result = treeHandler.remove(data, action.itemId);
       // console.log('应该是这里吧',result)
       // console.log('item',item)
       // console.log('action item',action)
-      result = tree.insertAfter(result, action.targetId, item);
+      result = treeHandler.insertAfter(result, action.targetId, item);
       return result;
     }
 
     if (instruction.type === "make-child") {
-      let result = tree.remove(data, action.itemId);
-      result = tree.insertChild(result, action.targetId, item);
-      
+      let result = treeHandler.remove(data, action.itemId);
+      result = treeHandler.insertChild(result, action.targetId, item);
+
       return result;
     }
 
@@ -192,7 +244,7 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
   }
 
   if (action.type === "modal-move") {
-    let result = tree.remove(data, item?.id!);
+    let result = treeHandler.remove(data, item?.id!);
 
     const siblingItems = getChildItems(result, action.targetId) ?? [];
 
@@ -208,21 +260,21 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
          * Otherwise for deeper levels that have no children, we need to
          * use `insertChild` instead of inserting relative to a sibling.
          */
-        result = tree.insertChild(result, action.targetId, item);
+        result = treeHandler.insertChild(result, action.targetId, item);
       }
     } else if (action.index === siblingItems.length) {
       const relativeTo = siblingItems[siblingItems.length - 1];
       /**
        * If the position selected is the end, we insert after the last item.
        */
-      result = tree.insertAfter(result, relativeTo.id!, item);
+      result = treeHandler.insertAfter(result, relativeTo.id!, item);
     } else {
       const relativeTo = siblingItems[action.index];
       /**
        * Otherwise we insert before the existing item in the given position.
        * This results in the new item being in that position.
        */
-      result = tree.insertBefore(result, relativeTo.id!, item);
+      result = treeHandler.insertBefore(result, relativeTo.id!, item);
     }
 
     return result;
@@ -231,13 +283,13 @@ export function updateTree(data: TreeItem[], action: TreeAction) {
   return data;
 }
 
-function getChildItems(data: TreeItem[], targetId: string) {
+function getChildItems<T extends TreeItem>(data: T[], targetId: string) {
   /**
    * An empty string is representing the root
    */
   if (targetId === "") return data;
 
-  const targetItem = tree.find(data, targetId);
+  const targetItem = treeHandler.find(data, targetId);
   if (!targetItem) {
     console.error(`missing ${targetItem}`);
     return;

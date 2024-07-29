@@ -1,4 +1,12 @@
 <template>
+  <div style="margin-bottom: 20px">
+    <el-space alignment="start">
+      <el-button @click="handleCurrentSelection"> 选中当前页 </el-button>
+      <el-button @click="handleCancelSelection"> 取消当前页 </el-button>
+      <el-button @click="handleToggleAllSelection"> 反选 </el-button>
+      <el-button @click="handleClearSelection">清除所有选项</el-button>
+    </el-space>
+  </div>
   <el-table-tree-dnd
     ref="tableRef"
     :data="departments"
@@ -6,7 +14,7 @@
     :pagination="{
       total,
       pageSize,
-      currentPage
+      currentPage,
     }"
     :loading="loading"
     :allow-drag="allowDrag"
@@ -18,13 +26,17 @@
     @node-drag-over="onNodeDragOver"
     @node-drag-end="onNodeDragEnd"
     @selection-change="onSelectionChange"
-    @size-change="(val)=>{
-      pageSize = val;
-    }"
-    @current-change="(val)=>{
-      currentPage = val;
-      fetchDepartments();
-    }"
+    @size-change="
+      (val) => {
+        pageSize = val;
+      }
+    "
+    @current-change="
+      (val) => {
+        currentPage = val;
+        fetchDepartments();
+      }
+    "
   >
     <template #status="{ row }">
       <el-tag :type="row.status === 1 ? 'success' : 'danger'">{{
@@ -33,22 +45,52 @@
     </template>
     <template #action="{ row }">
       <el-space>
-        <el-button type="primary" size="small"> 新增子部门 </el-button>
-        <el-button size="small"> 修改名称 </el-button>
-        <el-button type="danger" size="small"> 删除 </el-button>
+        <el-button
+          type="primary"
+          size="small"
+          @click="
+            () => {
+              handleAdd(row);
+            }
+          "
+        >
+          新增子部门
+        </el-button>
+        <el-button
+          size="small"
+          @click="
+            () => {
+              handleEdit(row);
+            }
+          "
+        >
+          修改名称
+        </el-button>
+        <el-popconfirm
+          title="确定删除?"
+          @confirm="
+            () => {
+              handleDelete(row);
+            }
+          "
+        >
+          <template #reference>
+            <el-button type="danger" size="small"> 删除 </el-button>
+          </template>
+        </el-popconfirm>
       </el-space>
     </template>
   </el-table-tree-dnd>
-  <el-button @click="onToggleAllSelection"> 切换选项 </el-button>
-  <el-button @click="onClearSelection">清除所有选项</el-button>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 import axios from "axios";
 import ElTableTreeDnd, {
   TableColumn,
   TableRefExpose,
+  treeHandler,
 } from "../../../packages/el-table-tree-dnd/src/index";
 import { DepartmentPath, type Department } from "../mock/department";
 
@@ -59,7 +101,14 @@ const pageSize = ref(10);
 const total = ref(0);
 const loading = ref(false);
 
-const columns = ref<TableColumn[]>([
+const tableRef = ref<TableRefExpose>();
+
+const columns = ref<TableColumn<Department>[]>([
+  {
+    prop: "selection",
+    type: "selection",
+    width: "50",
+  },
   {
     prop: "departmentName",
     label: "部门",
@@ -124,7 +173,7 @@ const fetchDepartments = async () => {
     loading.value = false;
     departments.value = response.data?.data?.list;
     total.value = response.data?.data?.total;
-    console.log('departments',departments.value?.[0])
+    console.log("departments", departments.value?.[0]);
   } catch (error) {
     loading.value = false;
     console.error("Error fetching departments:", error);
@@ -132,6 +181,55 @@ const fetchDepartments = async () => {
 };
 
 fetchDepartments();
+
+// 新增子部门
+const handleAdd = async (row: Department) => {
+  const response = await axios.post(DepartmentPath.Add, {
+    departmentId: row.id,
+  });
+  if (response?.data?.code === 200) {
+    const newNodeData = treeHandler.insertChild<Department>(
+      departments.value,
+      row.id,
+      response.data?.data
+    );
+    departments.value = newNodeData;
+    ElMessage.success("新增子部门成功");
+  }
+};
+
+// 修改名称
+const handleEdit = async (row: Department) => {
+  try {
+    const res = await ElMessageBox.prompt(
+      `修改【${row.departmentName}】的部门名字`,
+      "提示",
+      {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+      }
+    );
+    if (res.value && res.action === "confirm") {
+      row.departmentName = res.value;
+      ElMessage.success("修改成功");
+    }
+  } catch {}
+};
+
+// 删除部门
+const handleDelete = async (row: Department) => {
+  const response = await axios.post(DepartmentPath.Delete, {
+    departmentId: row.id,
+  });
+  if (response?.data?.code === 200) {
+    const newNodeData = treeHandler.remove<Department>(
+      departments.value,
+      row.id
+    );
+    departments.value = newNodeData;
+    ElMessage.success("删除成功");
+  }
+};
 
 const onNodeDragStart = ({ dragSource }) => {
   console.log("开始", dragSource);
@@ -156,11 +254,11 @@ const onNodeDragEnd = ({ dragSource, dropTarget }) => {
   console.log("onNodeDragEnd dropTarget", dropTarget);
 };
 
-const onNodeDrop = ({ nodeData, dragSource, dropTarget }) => {
-  console.log("onNodeDrop", nodeData);
+const onNodeDrop = ({ newNodeData, dragSource, dropTarget }) => {
+  console.log("onNodeDrop", newNodeData);
   console.log("onNodeDrop dragSource", dragSource);
   console.log("onNodeDrop dropTarget", dropTarget);
-  departments.value = nodeData || [];
+  departments.value = newNodeData || [];
 };
 
 const allowDrag = ({ dragSource }) => {
@@ -182,13 +280,25 @@ const allowDrop = ({ dragSource, dropTarget }) => {
   return true;
 };
 
-const tableRef = ref<TableRefExpose>();
+const handleCurrentSelection = async () => {
+  const elTableRef = await tableRef.value?.getElTableExpose();
+  treeHandler.traverse<Department>(departments.value, (item) => {
+    elTableRef?.toggleRowSelection(item, true);
+  });
+};
 
-const onToggleAllSelection = async () => {
+const handleCancelSelection = async () => {
+  const elTableRef = await tableRef.value?.getElTableExpose();
+  treeHandler.traverse<Department>(departments.value, (item) => {
+    elTableRef?.toggleRowSelection(item, false);
+  });
+};
+
+const handleToggleAllSelection = async () => {
   const elTableRef = await tableRef.value?.getElTableExpose();
   elTableRef?.toggleAllSelection();
 };
-const onClearSelection = async () => {
+const handleClearSelection = async () => {
   const elTableRef = await tableRef.value?.getElTableExpose();
   elTableRef?.clearSelection();
 };

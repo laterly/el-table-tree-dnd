@@ -7,9 +7,8 @@ import {
   extractInstruction,
 } from "@atlaskit/pragmatic-drag-and-drop-hitbox/tree-item";
 import ElTableTreeItemDnd from "./el-table-tree-item-dnd.vue";
-import { updateTree, tree } from "./utils";
+import { updateTree, treeHandler } from "./utils";
 import {
-  Recordable,
   TableProps,
   EmitsDNDProps,
   TableEmitsProps,
@@ -17,7 +16,7 @@ import {
   TableRefExpose,
 } from "./types";
 
-const props = withDefaults(defineProps<TableProps>(), {
+const props = withDefaults(defineProps<TableProps<any>>(), {
   draggable: true,
   data: () => [],
   columns: () => [],
@@ -38,21 +37,19 @@ const props = withDefaults(defineProps<TableProps>(), {
   border: true,
 });
 
-const emits = defineEmits<TableEmitsProps>();
+const emits = defineEmits<TableEmitsProps<any>>();
 
 const tableRef = ref<ElTableRef>();
 
-const expandItem = (row: Recordable) => {
+const expandItem = (row: any) => {
   tableRef.value?.toggleRowExpansion(row, true);
 };
 
-const closeItem = (row: Recordable) => {
+const closeItem = (row: any) => {
   tableRef.value?.toggleRowExpansion(row, false);
 };
 
 watchEffect((onCleanup) => {
-  
-console.log("props.data", props.data);
   const dndCleanup = combine(
     monitorForElements({
       onDrop(args) {
@@ -75,10 +72,11 @@ console.log("props.data", props.data);
               targetId,
             }) ?? [];
 
-          const dropData = tree.find(toRaw(props.data), targetId);
+          const dropData = treeHandler.find(toRaw(props.data), targetId);
 
           emits("node-drop", {
-            nodeData: treesData,
+            newNodeData: treesData,
+            oldNodeData: toRaw(props.data),
             dragSource: source.data!,
             dropTarget: dropData!,
           });
@@ -101,8 +99,8 @@ const handleNodeDrag = (
   target,
   type: "enter" | "leave" | "over" | "end"
 ) => {
-  const dropData = tree.find(toRaw(props.data), target?.id);
-  emits(`node-drag-${type}` as keyof EmitsDNDProps, {
+  const dropData = treeHandler.find(toRaw(props.data), target?.id);
+  emits(`node-drag-${type}` as keyof EmitsDNDProps<any>, {
     dragSource: source!,
     dropTarget: dropData!,
   });
@@ -128,9 +126,8 @@ defineExpose<TableRefExpose>({
   getElTableExpose: async () => {
     await nextTick();
     return tableRef?.value!;
-  },
+  }
 });
-
 </script>
 <template>
   <div class="el-table-tree-dnd">
@@ -236,8 +233,6 @@ defineExpose<TableRefExpose>({
 
     <el-pagination
       v-if="props.pagination"
-      :page-size="pageSize"
-      :current-page="currentPage"
       v-bind="pagination"
       @size-change="
         (val) => {
@@ -254,11 +249,11 @@ defineExpose<TableRefExpose>({
   </div>
 </template>
 
-<!-- <style lang="css" scoped>
+<style lang="css" scoped>
 :deep(.el-table .el-table__cell) {
   position: static;
 }
 :deep(.el-table tr) {
   position: relative;
 }
-</style> -->
+</style>

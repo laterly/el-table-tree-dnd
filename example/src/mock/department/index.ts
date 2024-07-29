@@ -17,18 +17,15 @@ export interface Department {
 
 export enum DepartmentPath {
   List = "/department/table/list",
+  Add = "/department/table/list/add",
+  Delete = "/department/table/list/delete",
 }
 
 // 生成部门数据的函数
 // 假设 toAnyString 是一个函数，用于生成唯一的字符串 ID
 const toAnyString = () => Mock.Random.guid();
 
-const generateDepartmentTree = (
-  parentId: string,
-  depth: number
-): Department | null => {
-  if (depth === 0) return null;
-
+const generateItem = () => {
   const department: Department = {
     departmentName: `部门${Mock.Random.integer(1, 100)}`,
     id: toAnyString(),
@@ -36,11 +33,22 @@ const generateDepartmentTree = (
     status: Mock.Random.integer(0, 1),
     remark: Mock.Random.csentence(5, 50),
     leader: Mock.Random.cname(), // 随机生成部门负责人
-    phone: Mock.Random.string('number', 11), // 随机生成电话号码
+    phone: Mock.Random.string("number", 11), // 随机生成电话号码
     email: Mock.Random.email(), // 随机生成邮箱
     location: Mock.Random.city(), // 随机生成部门位置
     children: [],
   };
+
+  return department;
+};
+
+const generateDepartmentTree = (
+  parentId: string,
+  depth: number
+): Department | null => {
+  if (depth === 0) return null;
+
+  const department = generateItem();
 
   // 递归生成子部门
   const maxChildren = Mock.Random.integer(0, 5); // 每个部门最多5个子部门
@@ -119,6 +127,48 @@ function paginate<T>(array: T[], page: number, pageSize: number): T[] {
   return array.slice(startIndex, startIndex + pageSize);
 }
 
+// 新增部门接口
+const addDepartment = (
+  parentId: string,
+  newDepartment: Department
+): boolean => {
+  const findDepartmentAndAdd = (departments: Department[]): boolean => {
+    for (let department of departments) {
+      if (department.id === parentId) {
+        department.children.push(newDepartment);
+        return true;
+      }
+      // 递归查找子部门
+      if (findDepartmentAndAdd(department.children)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  return findDepartmentAndAdd(allDepartments);
+};
+
+// 删除部门接口
+const deleteDepartment = (departmentId: string): boolean => {
+  const deleteDepartmentRecursively = (departments: Department[]): boolean => {
+    for (let i = 0; i < departments.length; i++) {
+      if (departments[i].id === departmentId) {
+        departments.splice(i, 1);
+        return true;
+      } else {
+        // 递归删除子部门
+        if (deleteDepartmentRecursively(departments[i].children)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
+  return deleteDepartmentRecursively(allDepartments);
+};
+
 export default [
   {
     url: DepartmentPath.List,
@@ -137,6 +187,48 @@ export default [
           total: allDepartments.length,
         },
       };
+    },
+  },
+  {
+    url: DepartmentPath.Add,
+    method: "post",
+    response: ({ body }) => {
+      let newDepartment = body as Department;
+      newDepartment = generateItem();
+      const { departmentId } = body;
+      const newAll = addDepartment(departmentId, newDepartment);
+      console.log("newAll", newAll);
+      console.log("newDepartment", newDepartment);
+      if (newDepartment) {
+        return {
+          code: 200,
+          message: "部门添加成功",
+          data: newDepartment,
+        };
+      } else {
+        return {
+          code: 500,
+          message: "部门添加失败",
+        };
+      }
+    },
+  },
+  {
+    url: DepartmentPath.Delete,
+    method: "post",
+    response: ({ body }) => {
+      const { departmentId } = body;
+      if (deleteDepartment(departmentId)) {
+        return {
+          code: 200,
+          message: "部门删除成功",
+        };
+      } else {
+        return {
+          code: 404,
+          message: "未找到指定部门",
+        };
+      }
     },
   },
 ] as MockMethod[];

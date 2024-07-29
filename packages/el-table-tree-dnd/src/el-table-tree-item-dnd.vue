@@ -21,7 +21,7 @@ import {
 // import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { treeRecordObj, setTreeRecord } from "./utils";
-import { Recordable, TableColumn } from "./types";
+import { TableColumn } from "./types";
 
 interface ItemProps {
   id: string | number;
@@ -32,14 +32,14 @@ interface ItemProps {
 }
 
 interface Props {
-  column: TableColumn;
+  column: TableColumn<any>;
   item: ItemProps;
-  expandItem?: (row: Recordable) => void;
-  closeItem?: (row: Recordable) => void;
-  allowDrag?: (props: { dragSource: Recordable }) => undefined | boolean;
+  expandItem?: (row: any) => void;
+  closeItem?: (row: any) => void;
+  allowDrag?: (props: { dragSource: any }) => undefined | boolean;
   allowDrop?: (props: {
-    dragSource: Recordable;
-    dropTarget: Recordable;
+    dragSource: any;
+    dropTarget: any;
   }) => undefined | boolean;
 }
 
@@ -47,11 +47,11 @@ const props = defineProps<Props>();
 
 const emits = defineEmits<{
   // 节点开始拖拽时触发的事件
-  (e: "node-drag-start", source: Recordable): void;
-  (e: "node-drag-enter", source: Recordable, target: Recordable): void;
-  (e: "node-drag-leave", source: Recordable, target: Recordable): void;
-  (e: "node-drag-over", source: Recordable, target: Recordable): void;
-  (e: "node-drag-end", source: Recordable, target: Recordable): void;
+  (e: "node-drag-start", source: any): void;
+  (e: "node-drag-enter", source: any, target: any): void;
+  (e: "node-drag-leave", source: any, target: any): void;
+  (e: "node-drag-over", source: any, target: any): void;
+  (e: "node-drag-end", source: any, target: any): void;
 }>();
 
 const spanRef = ref();
