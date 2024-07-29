@@ -14,13 +14,6 @@
           <router-link
             to="/example2"
             style="text-decoration: none; color: inherit"
-            >普通拖拽</router-link
-          >
-        </el-menu-item>
-        <el-menu-item index="3">
-          <router-link
-            to="/example3"
-            style="text-decoration: none; color: inherit"
             >综合示例</router-link
           >
         </el-menu-item>

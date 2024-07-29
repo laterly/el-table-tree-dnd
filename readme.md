@@ -19,6 +19,13 @@
 - 文件夹管理：在文件管理系统中，展示文件夹的层级结构，并通过拖拽进行文件或文件夹的移动。
 - 分类
 
+## 预览截图
+
+![](https://github.com/laterly/el-table-tree-dnd/blob/main/example1.png)
+
+## 示例代码
+[`example`](./example/src/views/example1.vue)
+
 ## 安装
 
 ```bash
