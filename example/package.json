@@ -9,11 +9,18 @@
   },
   "dependencies": {
     "element-plus": "^2.7.0",
-    "vue": "^3.3.0"
+    "vue": "^3.3.0",
+    "vue-router": "^4.4.0"
   },
   "keywords": [
     "el-table-tree-dnd",
     "el-table",
+    "element-plus",
+    "table",
+    "drag",
+    "drop",
+    "dnd",
+    "drag-and-drop",
     "tree",
     "easy",
     "pragmatic-drag-and-drop"

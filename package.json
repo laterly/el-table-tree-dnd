@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run start:lib\" \"sleep 3 && npm run start:example\" --raw --kill-others",
+    "start": "concurrently \"npm run start:lib\" \"sleep 8 && npm run start:example\" --raw --kill-others",
     "start:lib": "pnpm -C packages/el-table-tree-dnd start",
     "start:example": "pnpm -C example start",
     "build:lib": "pnpm -C packages/el-table-tree-dnd build",
@@ -27,9 +27,13 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "latest",
     "autoprefixer": "latest",
+    "axios": "^1.7.2",
     "concurrently": "^8.2.2",
+    "jekyll-cli": "^0.3.9",
+    "mockjs": "^1.1.0",
     "postcss": "latest",
     "vite": "latest",
+    "vite-plugin-mock": "^3.0.2",
     "vue-tsc": "latest"
   }
 }

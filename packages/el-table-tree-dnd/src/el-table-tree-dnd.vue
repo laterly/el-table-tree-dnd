@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watchEffect, ref, nextTick, computed, watch, toRaw } from "vue";
+import { watchEffect, ref, nextTick, computed, toRaw, withDefaults } from "vue";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import {
@@ -10,42 +10,14 @@ import ElTableTreeItemDnd from "./el-table-tree-item-dnd.vue";
 import { updateTree, tree } from "./utils";
 import {
   Recordable,
-  TableColumn,
+  TableProps,
+  EmitsDNDProps,
+  TableEmitsProps,
   ElTableRef,
   TableRefExpose,
-  Pagination,
 } from "./types";
 
-interface DNDProps {
-  draggable?: boolean; // 是否开启拖拽节点功能
-  allowDrag?: (props: { dragSource: Recordable }) => undefined | boolean;
-  allowDrop?: (props: {
-    dragSource: Recordable;
-    dropTarget: Recordable;
-  }) => undefined | boolean; // 是否允许放置
-}
-
-interface TableProps {
-  data?: Recordable[];
-  // 表头
-  columns?: TableColumn[];
-  rowKey?: string;
-  defaultExpandAll?: boolean;
-  lazy?: boolean;
-  treeProps?: { hasChildren?: string; children?: string; label?: string };
-  showOverflowTooltip?: boolean;
-  align?: "left" | "center" | "right";
-  headerAlign?: "left" | "center" | "right";
-  pageSize?: number;
-  currentPage?: number;
-  // 是否展示分页
-  pagination?: Pagination;
-  loading?: boolean;
-}
-
-type Props = DNDProps & TableProps;
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<TableProps>(), {
   draggable: true,
   data: () => [],
   columns: () => [],
@@ -60,62 +32,13 @@ const props = withDefaults(defineProps<Props>(), {
   showOverflowTooltip: true,
   align: "left",
   headerAlign: "left",
-  pageSize: 20,
+  pageSize: 10,
   currentPage: 1,
   loading: false,
+  border: true,
 });
 
-// console.log("props", props.data);
-
-interface EmitsDNDProps {
-  (e: "node-drag-start", props: { dragSource: Recordable }): void; // 节点开始拖拽时触发的事件
-  (
-    e: "node-drop",
-    props: {
-      nodeData: Recordable[];
-      dragSource: Recordable;
-      dropTarget: Recordable;
-    }
-  ): void; // 拖拽成功完成时触发的事件
-  (
-    e: "node-drag-enter",
-    props: {
-      dragSource: Recordable;
-      dropTarget: Recordable;
-    }
-  );
-  (
-    e: "node-drag-leave",
-    props: {
-      dragSource: Recordable;
-      dropTarget: Recordable;
-    }
-  );
-  (
-    e: "node-drag-over",
-    props: {
-      dragSource: Recordable;
-      dropTarget: Recordable;
-    }
-  );
-  (
-    e: "node-drag-end",
-    props: {
-      dragSource: Recordable;
-      dropTarget: Recordable;
-    }
-  );
-}
-
-interface EmitsTableProps {
-  (e: "selection-change", data: Recordable[]): void; // 改变selection
-  (e: "update:pageSize", num: number): void;
-  (e: "update:currentPage", num: number): void;
-}
-
-type EmitsProps = EmitsDNDProps & EmitsTableProps;
-
-const emits = defineEmits<EmitsProps>();
+const emits = defineEmits<TableEmitsProps>();
 
 const tableRef = ref<ElTableRef>();
 
@@ -128,6 +51,8 @@ const closeItem = (row: Recordable) => {
 };
 
 watchEffect((onCleanup) => {
+  
+console.log("props.data", props.data);
   const dndCleanup = combine(
     monitorForElements({
       onDrop(args) {
@@ -183,8 +108,6 @@ const handleNodeDrag = (
   });
 };
 
-const pageSize = ref(20);
-const currentPage = ref(1);
 const pagination = computed(() => {
   return Object.assign(
     {
@@ -197,23 +120,9 @@ const pagination = computed(() => {
       hideOnSinglePage: false,
       total: 10,
     },
-    props.pagination
+    props?.pagination || {}
   );
 });
-
-watch(
-  () => props.pageSize,
-  (val: number) => {
-    pageSize.value = val;
-  }
-);
-
-watch(
-  () => props.currentPage,
-  (val: number) => {
-    currentPage.value = val;
-  }
-);
 
 defineExpose<TableRefExpose>({
   getElTableExpose: async () => {
@@ -221,15 +130,18 @@ defineExpose<TableRefExpose>({
     return tableRef?.value!;
   },
 });
+
 </script>
 <template>
   <div class="el-table-tree-dnd">
     <el-table
       ref="tableRef"
+      v-loading="props.loading"
       :data="props.data"
       :row-key="props.rowKey"
-      border
+      :border="props.border"
       :default-expand-all="props.defaultExpandAll"
+      :showOverflowTooltip="props.showOverflowTooltip"
       :lazy="props.lazy"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       @selection-change="
@@ -241,22 +153,15 @@ defineExpose<TableRefExpose>({
       <el-table-column
         v-for="(column, index) in props.columns"
         :key="`${'table-column'}-${index}`"
-        :showOverflowTooltip="props.showOverflowTooltip"
-        :align="props.align"
-        :headerAlign="props.headerAlign"
-        :prop="column.prop"
+        :align="column.align"
+        :headerAlign="column.headerAlign"
+        :prop="column?.prop"
         :label="column.label"
         :type="column.type"
         :reserve-selection="column.reserveSelection"
         :selectable="column.selectable"
         :fixed="column.fixed"
-        :width="
-          column.type === 'selection'
-            ? column.width || 50
-            : column.type === 'index'
-            ? column.width || 65
-            : column.width
-        "
+        :width="column.width"
         v-bind="column"
       >
         <template v-if="column?.slots?.header" #header>
@@ -331,17 +236,17 @@ defineExpose<TableRefExpose>({
 
     <el-pagination
       v-if="props.pagination"
-      v-model:page-size="pageSize"
-      v-model:current-page="currentPage"
+      :page-size="pageSize"
+      :current-page="currentPage"
       v-bind="pagination"
       @size-change="
         (val) => {
-          emits('update:pageSize', val);
+          emits('size-change', val);
         }
       "
       @current-change="
         (val) => {
-          emits('update:currentPage', val);
+          emits('current-change', val);
         }
       "
       style="margin-top: 10px"
@@ -349,11 +254,11 @@ defineExpose<TableRefExpose>({
   </div>
 </template>
 
-<style lang="css" scoped>
+<!-- <style lang="css" scoped>
 :deep(.el-table .el-table__cell) {
   position: static;
 }
 :deep(.el-table tr) {
   position: relative;
 }
-</style>
+</style> -->

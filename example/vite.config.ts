@@ -1,9 +1,12 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { viteMockServe } from "vite-plugin-mock";
 
 export default defineConfig({
-  plugins: [vue()],
-  server:{
-    port: 3002
-  }
-})
+  plugins: [vue(), viteMockServe({
+    mockPath:'./src/mock'
+  })],
+  server: {
+    port: 3002,
+  },
+});

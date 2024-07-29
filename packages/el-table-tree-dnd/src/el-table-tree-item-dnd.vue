@@ -186,7 +186,7 @@ onMounted(() => {
           location?.current?.dropTargets?.[0]?.data
         );
       },
-      onDrop: ({ source, location, self }) => {
+      onDrop: ({ source, location }) => {
         instruction.value = null;
         if (location.current.dropTargets[0].data.id === props.item.id) {
           nextTick(() => {
@@ -221,9 +221,10 @@ onBeforeUnmount(() => {
     <span v-else class="pl-2">{{
       props?.column?.formatter?.(
         props.item?.value,
-        props.column,
+        props?.column as any,
+        props.item?.value?.[props.column?.prop!],
         props.item?.index
-      ) || props.item?.value?.[props.column?.field]
+      ) || props.item?.value?.[props.column?.prop!]
     }}</span>
     <span
       v-if="instruction"
