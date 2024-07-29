@@ -20,13 +20,13 @@ const mainRoutes: RouteRecordRaw[] = [
       title: '例子2',
     },
   },
-  {
-    path: '/example3',
-    component: ()=>import('../views/example3.vue'),
-    meta: {
-      title: '例子3',
-    },
-  },
+  // {
+  //   path: '/example3',
+  //   component: ()=>import('../views/example3.vue'),
+  //   meta: {
+  //     title: '例子3',
+  //   },
+  // },
 ];
 //合并路由表
 const routes: RouteRecordRaw[] = [...mainRoutes];

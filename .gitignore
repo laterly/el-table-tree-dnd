@@ -7,7 +7,7 @@
 .temp
 .hound
 .swc
-dist
+/dist
 *.log
 node_modules
 npm-debug.log
@@ -15,6 +15,6 @@ docs/.vitepress/cache
 /.changelog
 /packages/*/lib
 /packages/*/es
-/packages/*/dist
+/packages/example/dist
 package-lock.json
 test

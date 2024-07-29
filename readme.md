@@ -25,6 +25,12 @@
 
 ## 示例代码
 [`example`](./example/src/views/example1.vue)
+```bash
+git clone https://github.com/laterly/el-table-tree-dnd.git
+pnpm install
+pnpm dev
+```
+访问:`http://localhost:3002/`即可查看example
 
 ## 安装
 

@@ -5,7 +5,8 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run start:lib\" \"npm run start:example\" --raw",
+    "dev": "npm run start:example",
+    "start": "concurrently \"npm run start:lib\" \"sleep 10 && npm run start:example\" --raw",
     "start:lib": "pnpm -C packages/el-table-tree-dnd start",
     "start:example": "pnpm -C example start",
     "build:lib": "pnpm -C packages/el-table-tree-dnd build",
