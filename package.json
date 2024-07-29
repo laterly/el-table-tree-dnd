@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"npm run start:lib\" \"sleep 8 && npm run start:example\" --raw --kill-others",
+    "start": "concurrently \"npm run start:lib\" \"npm run start:example\" --raw",
     "start:lib": "pnpm -C packages/el-table-tree-dnd start",
     "start:example": "pnpm -C example start",
     "build:lib": "pnpm -C packages/el-table-tree-dnd build",
@@ -33,6 +33,7 @@
     "mockjs": "^1.1.0",
     "postcss": "latest",
     "vite": "latest",
+    "vite-plugin-dts": "4.0.0-beta.1",
     "vite-plugin-mock": "^3.0.2",
     "vue-tsc": "latest"
   }

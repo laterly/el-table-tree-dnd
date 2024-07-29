@@ -1,16 +1,11 @@
 {
   "name": "el-table-tree-dnd",
   "description": "el-table支持树拖拽",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "license": "Apache-2.0",
   "main": "./dist/el-table-tree-dnd.umd.js",
   "module": "./dist/el-table-tree-dnd.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/el-table-tree-dnd.es.js",
-      "require": "./dist/el-table-tree-dnd.umd.js"
-    }
-  },
+  "types": "./dist/index.d.ts",
   "homepage": "https://github.com/laterly/el-table-tree-dnd",
   "files": [
     "dist/",

@@ -7,21 +7,21 @@
             to="/example1"
             style="text-decoration: none; color: inherit"
           >
-            <span>拖拽树</span>
+            <span>树拖拽</span>
           </router-link>
         </el-menu-item>
         <el-menu-item index="2">
           <router-link
             to="/example2"
             style="text-decoration: none; color: inherit"
-            >选项勾选</router-link
+            >普通拖拽</router-link
           >
         </el-menu-item>
         <el-menu-item index="3">
           <router-link
             to="/example3"
             style="text-decoration: none; color: inherit"
-            >综合</router-link
+            >综合示例</router-link
           >
         </el-menu-item>
       </el-menu>

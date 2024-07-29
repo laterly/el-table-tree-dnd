@@ -127,9 +127,10 @@ import ElTableTreeDnd from 'el-table-tree-dnd';
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import ElTableTreeDnd,{ Recordable } from 'el-table-tree-dnd';
+import ElTableTreeDnd,{ TableColumn } from 'el-table-tree-dnd';
+import 'el-table-tree-dnd/dist/style.css';
 
-const tableData = ref<Recordable[]>([
+const tableData = ref<TableColumn<any>[]>([
   {
     id: 1,
     title: "节点 1",

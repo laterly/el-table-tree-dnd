@@ -1,42 +1,10 @@
 <template>
-  <div style="margin-bottom: 20px">
-    <el-space alignment="start">
-      <el-button @click="handleCurrentSelection"> 选中当前页 </el-button>
-      <el-button @click="handleCancelSelection"> 取消当前页 </el-button>
-      <el-button @click="handleToggleAllSelection"> 反选 </el-button>
-      <el-button @click="handleClearSelection">清除所有选项</el-button>
-    </el-space>
-  </div>
   <el-table-tree-dnd
     ref="tableRef"
     :data="departments"
     :columns="columns"
-    :pagination="{
-      total,
-      pageSize,
-      currentPage,
-    }"
     :loading="loading"
-    :allow-drag="allowDrag"
-    :allow-drop="allowDrop"
     @node-drop="onNodeDrop"
-    @node-drag-start="onNodeDragStart"
-    @node-drag-enter="onNodeDragEnter"
-    @node-drag-leave="onNodeDragLeave"
-    @node-drag-over="onNodeDragOver"
-    @node-drag-end="onNodeDragEnd"
-    @selection-change="onSelectionChange"
-    @size-change="
-      (val) => {
-        pageSize = val;
-      }
-    "
-    @current-change="
-      (val) => {
-        currentPage = val;
-        fetchDepartments();
-      }
-    "
   >
     <template #status="{ row }">
       <el-tag :type="row.status === 1 ? 'success' : 'danger'">{{
@@ -91,24 +59,17 @@ import ElTableTreeDnd, {
   TableColumn,
   TableRefExpose,
   treeHandler,
-} from "../../../packages/el-table-tree-dnd/src/index";
+} from "el-table-tree-dnd";
+import "el-table-tree-dnd/dist/style.css";
 import { DepartmentPath, type Department } from "../mock/department";
 
 const departments = ref<Department[]>([]);
 
-const currentPage = ref(1);
-const pageSize = ref(10);
-const total = ref(0);
 const loading = ref(false);
 
 const tableRef = ref<TableRefExpose>();
 
 const columns = ref<TableColumn<Department>[]>([
-  {
-    prop: "selection",
-    type: "selection",
-    width: "50",
-  },
   {
     prop: "departmentName",
     label: "部门",
@@ -166,14 +127,12 @@ const fetchDepartments = async () => {
     loading.value = true;
     const response = await axios.get(DepartmentPath.List, {
       params: {
-        page: currentPage.value,
-        pageSize: pageSize.value,
+        page: 1,
+        pageSize: 20,
       },
     });
     loading.value = false;
     departments.value = response.data?.data?.list;
-    total.value = response.data?.data?.total;
-    console.log("departments", departments.value?.[0]);
   } catch (error) {
     loading.value = false;
     console.error("Error fetching departments:", error);
@@ -231,79 +190,7 @@ const handleDelete = async (row: Department) => {
   }
 };
 
-const onNodeDragStart = ({ dragSource }) => {
-  console.log("开始", dragSource);
-};
-
-const onNodeDragEnter = ({ dragSource, dropTarget }) => {
-  console.log("onNodeDragEnter dragSource", dragSource);
-  console.log("onNodeDragEnter dropTarget", dropTarget);
-};
-const onNodeDragLeave = ({ dragSource, dropTarget }) => {
-  console.log("onNodeDragLeave dragSource", dragSource);
-  console.log("onNodeDragLeave dropTarget", dropTarget);
-};
-
-const onNodeDragOver = ({ dragSource, dropTarget }) => {
-  console.log("onNodeDragOver dragSource", dragSource);
-  console.log("onNodeDragOver dropTarget", dropTarget);
-};
-
-const onNodeDragEnd = ({ dragSource, dropTarget }) => {
-  console.log("onNodeDragEnd dragSource", dragSource);
-  console.log("onNodeDragEnd dropTarget", dropTarget);
-};
-
-const onNodeDrop = ({ newNodeData, dragSource, dropTarget }) => {
-  console.log("onNodeDrop", newNodeData);
-  console.log("onNodeDrop dragSource", dragSource);
-  console.log("onNodeDrop dropTarget", dropTarget);
+const onNodeDrop = ({ newNodeData }) => {
   departments.value = newNodeData || [];
-};
-
-const allowDrag = ({ dragSource }) => {
-  console.log("allowDrag dragSource", dragSource);
-  if (dragSource?.title === "子节点 2-1") {
-    return false;
-  }
-  return true;
-};
-
-const allowDrop = ({ dragSource, dropTarget }) => {
-  console.log("allowDrop dragSource", dragSource);
-  console.log("allowDrop dropTarget", dropTarget);
-  if (dropTarget?.title === "子节点 2-1") {
-    console.log("进来 false");
-    return false;
-  }
-  console.log("进来 true");
-  return true;
-};
-
-const handleCurrentSelection = async () => {
-  const elTableRef = await tableRef.value?.getElTableExpose();
-  treeHandler.traverse<Department>(departments.value, (item) => {
-    elTableRef?.toggleRowSelection(item, true);
-  });
-};
-
-const handleCancelSelection = async () => {
-  const elTableRef = await tableRef.value?.getElTableExpose();
-  treeHandler.traverse<Department>(departments.value, (item) => {
-    elTableRef?.toggleRowSelection(item, false);
-  });
-};
-
-const handleToggleAllSelection = async () => {
-  const elTableRef = await tableRef.value?.getElTableExpose();
-  elTableRef?.toggleAllSelection();
-};
-const handleClearSelection = async () => {
-  const elTableRef = await tableRef.value?.getElTableExpose();
-  elTableRef?.clearSelection();
-};
-
-const onSelectionChange = (data) => {
-  console.log("data", data);
 };
 </script>
