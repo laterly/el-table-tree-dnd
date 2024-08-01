@@ -192,8 +192,6 @@ export function updateTree<T extends TreeItem>(data: T[], action: TreeAction) {
   const item = treeHandler.find(data, action.itemId);
   if (!item) return data;
 
-  // console.log('action',action)
-
   if (action.type === "instruction") {
     const instruction = action.instruction;
 
@@ -224,9 +222,6 @@ export function updateTree<T extends TreeItem>(data: T[], action: TreeAction) {
 
     if (instruction.type === "reorder-below") {
       let result = treeHandler.remove(data, action.itemId);
-      // console.log('应该是这里吧',result)
-      // console.log('item',item)
-      // console.log('action item',action)
       result = treeHandler.insertAfter(result, action.targetId, item);
       return result;
     }
@@ -298,8 +293,12 @@ function getChildItems<T extends TreeItem>(data: T[], targetId: string) {
   return targetItem.children;
 }
 
-export const treeRecordObj: Record<string, boolean> = {};
+export let treeRecordObj: Record<string, boolean> = {};
 
 export const setTreeRecord = (index: number) => {
   treeRecordObj[index] = true;
+};
+
+export const resetTreeRecord = () => {
+  treeRecordObj = {};
 };

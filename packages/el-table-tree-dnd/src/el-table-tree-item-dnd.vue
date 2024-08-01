@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-  ref,
-  onMounted,
-  unref,
-  onBeforeUnmount,
-  computed,
-  nextTick,
-} from "vue";
+import { ref, onMounted, unref, onBeforeUnmount, nextTick } from "vue";
 import {
   draggable,
   dropTargetForElements,
@@ -20,7 +13,7 @@ import {
 // import { pointerOutsideOfPreview } from "@atlaskit/pragmatic-drag-and-drop/element/pointer-outside-of-preview";
 // import { setCustomNativeDragPreview } from "@atlaskit/pragmatic-drag-and-drop/element/set-custom-native-drag-preview";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
-import { treeRecordObj, setTreeRecord } from "./utils";
+import { treeRecordObj, setTreeRecord, resetTreeRecord } from "./utils";
 import { TableColumn } from "./types";
 
 interface ItemProps {
@@ -57,10 +50,10 @@ const emits = defineEmits<{
 const spanRef = ref();
 const isDragging = ref(false);
 
-const mode = computed(() => {
-  if (props.item.hasChildren) return "expanded";
-  return "standard";
-});
+// const mode = computed(() => {
+//   if (props.item.hasChildren) return "expanded";
+//   return "standard";
+// });
 
 const instruction = ref<Extract<
   Instruction,
@@ -144,7 +137,7 @@ onMounted(() => {
           element,
           indentPerLevel: 16,
           currentLevel: props.item.level,
-          mode: mode.value,
+          mode: "standard",
           block: [],
         });
       },
@@ -211,6 +204,7 @@ onMounted(() => {
 });
 onBeforeUnmount(() => {
   dndFunction?.();
+  resetTreeRecord();
 });
 </script>
 <template>

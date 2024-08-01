@@ -44,5 +44,6 @@ export declare const treeHandler: {
     traverse<T extends TreeItem>(tree: T[], callback: (node: T) => void): void;
 };
 export declare function updateTree<T extends TreeItem>(data: T[], action: TreeAction): T[] | undefined;
-export declare const treeRecordObj: Record<string, boolean>;
+export declare let treeRecordObj: Record<string, boolean>;
 export declare const setTreeRecord: (index: number) => void;
+export declare const resetTreeRecord: () => void;

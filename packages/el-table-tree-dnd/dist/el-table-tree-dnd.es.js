@@ -1,5 +1,5 @@
-import { defineComponent as ke, ref as $, computed as Ne, onMounted as Ge, unref as Ze, nextTick as Le, onBeforeUnmount as _e, openBlock as C, createElementBlock as F, normalizeClass as ve, renderSlot as Z, toDisplayString as Je, normalizeStyle as Qe, createCommentVNode as Be, watchEffect as et, toRaw as J, resolveComponent as Q, resolveDirective as tt, withDirectives as rt, createBlock as ee, withCtx as R, Fragment as nt, renderList as at, mergeProps as pe, createSlots as ge, createVNode as it } from "vue";
-function X() {
+import { defineComponent as Ne, ref as M, onMounted as Le, unref as Ze, nextTick as Be, onBeforeUnmount as Fe, openBlock as k, createElementBlock as F, normalizeClass as pe, renderSlot as G, toDisplayString as _e, normalizeStyle as Je, createCommentVNode as He, toRaw as _, computed as Qe, resolveComponent as J, resolveDirective as et, withDirectives as tt, createBlock as Q, withCtx as K, Fragment as rt, renderList as nt, mergeProps as ge, createSlots as ye, createVNode as at } from "vue";
+function U() {
   for (var e = arguments.length, r = new Array(e), t = 0; t < e; t++)
     r[t] = arguments[t];
   return function() {
@@ -8,57 +8,57 @@ function X() {
     });
   };
 }
-function ot(e) {
+function it(e) {
   if (Array.isArray(e)) return e;
 }
-function lt(e, r) {
+function ot(e, r) {
   var t = e == null ? null : typeof Symbol < "u" && e[Symbol.iterator] || e["@@iterator"];
   if (t != null) {
-    var n, a, i, l, d = [], u = !0, v = !1;
+    var n, a, i, o, f = [], c = !0, p = !1;
     try {
-      if (i = (t = t.call(e)).next, r !== 0) for (; !(u = (n = i.call(t)).done) && (d.push(n.value), d.length !== r); u = !0) ;
-    } catch (O) {
-      v = !0, a = O;
+      if (i = (t = t.call(e)).next, r !== 0) for (; !(c = (n = i.call(t)).done) && (f.push(n.value), f.length !== r); c = !0) ;
+    } catch (m) {
+      p = !0, a = m;
     } finally {
       try {
-        if (!u && t.return != null && (l = t.return(), Object(l) !== l)) return;
+        if (!c && t.return != null && (o = t.return(), Object(o) !== o)) return;
       } finally {
-        if (v) throw a;
+        if (p) throw a;
       }
     }
-    return d;
+    return f;
   }
 }
-function oe(e, r) {
+function ie(e, r) {
   (r == null || r > e.length) && (r = e.length);
   for (var t = 0, n = Array(r); t < r; t++) n[t] = e[t];
   return n;
 }
-function Fe(e, r) {
+function Re(e, r) {
   if (e) {
-    if (typeof e == "string") return oe(e, r);
+    if (typeof e == "string") return ie(e, r);
     var t = {}.toString.call(e).slice(8, -1);
-    return t === "Object" && e.constructor && (t = e.constructor.name), t === "Map" || t === "Set" ? Array.from(e) : t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? oe(e, r) : void 0;
+    return t === "Object" && e.constructor && (t = e.constructor.name), t === "Map" || t === "Set" ? Array.from(e) : t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? ie(e, r) : void 0;
   }
 }
-function ut() {
+function lt() {
   throw new TypeError(`Invalid attempt to destructure non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
 }
-function He(e, r) {
-  return ot(e) || lt(e, r) || Fe(e, r) || ut();
+function Ke(e, r) {
+  return it(e) || ot(e, r) || Re(e, r) || lt();
 }
-var ye = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, L = {}, V = {};
-Object.defineProperty(V, "__esModule", { value: !0 });
-V.bind = void 0;
-function dt(e, r) {
+var me = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {}, B = {}, X = {};
+Object.defineProperty(X, "__esModule", { value: !0 });
+X.bind = void 0;
+function ut(e, r) {
   var t = r.type, n = r.listener, a = r.options;
   return e.addEventListener(t, n, a), function() {
     e.removeEventListener(t, n, a);
   };
 }
-V.bind = dt;
-var _ = {}, H = ye && ye.__assign || function() {
+X.bind = ut;
+var Z = {}, H = me && me.__assign || function() {
   return H = Object.assign || function(e) {
     for (var r, t = 1, n = arguments.length; t < n; t++) {
       r = arguments[t];
@@ -67,25 +67,25 @@ var _ = {}, H = ye && ye.__assign || function() {
     return e;
   }, H.apply(this, arguments);
 };
-Object.defineProperty(_, "__esModule", { value: !0 });
-_.bindAll = void 0;
-var ct = V;
-function me(e) {
+Object.defineProperty(Z, "__esModule", { value: !0 });
+Z.bindAll = void 0;
+var dt = X;
+function he(e) {
   if (!(typeof e > "u"))
     return typeof e == "boolean" ? {
       capture: e
     } : e;
 }
-function st(e, r) {
+function ct(e, r) {
   if (r == null)
     return e;
-  var t = H(H({}, e), { options: H(H({}, me(r)), me(e.options)) });
+  var t = H(H({}, e), { options: H(H({}, he(r)), he(e.options)) });
   return t;
 }
-function ft(e, r, t) {
+function st(e, r, t) {
   var n = r.map(function(a) {
-    var i = st(a, t);
-    return (0, ct.bind)(e, i);
+    var i = ct(a, t);
+    return (0, dt.bind)(e, i);
   });
   return function() {
     n.forEach(function(i) {
@@ -93,58 +93,58 @@ function ft(e, r, t) {
     });
   };
 }
-_.bindAll = ft;
+Z.bindAll = st;
 (function(e) {
   Object.defineProperty(e, "__esModule", { value: !0 }), e.bindAll = e.bind = void 0;
-  var r = V;
+  var r = X;
   Object.defineProperty(e, "bind", { enumerable: !0, get: function() {
     return r.bind;
   } });
-  var t = _;
+  var t = Z;
   Object.defineProperty(e, "bindAll", { enumerable: !0, get: function() {
     return t.bindAll;
   } });
-})(L);
-var Ke = "data-pdnd-honey-pot";
-function Me(e) {
-  return e instanceof Element && e.hasAttribute(Ke);
+})(B);
+var Me = "data-pdnd-honey-pot";
+function $e(e) {
+  return e instanceof Element && e.hasAttribute(Me);
 }
-function Re(e) {
-  var r = document.elementsFromPoint(e.x, e.y), t = He(r, 2), n = t[0], a = t[1];
-  return n ? Me(n) ? a ?? null : n : null;
+function We(e) {
+  var r = document.elementsFromPoint(e.x, e.y), t = Ke(r, 2), n = t[0], a = t[1];
+  return n ? $e(n) ? a ?? null : n : null;
 }
-function z(e) {
+function W(e) {
   "@babel/helpers - typeof";
-  return z = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
+  return W = typeof Symbol == "function" && typeof Symbol.iterator == "symbol" ? function(r) {
     return typeof r;
   } : function(r) {
     return r && typeof Symbol == "function" && r.constructor === Symbol && r !== Symbol.prototype ? "symbol" : typeof r;
-  }, z(e);
+  }, W(e);
 }
-function vt(e, r) {
-  if (z(e) != "object" || !e) return e;
+function ft(e, r) {
+  if (W(e) != "object" || !e) return e;
   var t = e[Symbol.toPrimitive];
   if (t !== void 0) {
     var n = t.call(e, r || "default");
-    if (z(n) != "object") return n;
+    if (W(n) != "object") return n;
     throw new TypeError("@@toPrimitive must return a primitive value.");
   }
   return (r === "string" ? String : Number)(e);
 }
-function pt(e) {
-  var r = vt(e, "string");
-  return z(r) == "symbol" ? r : r + "";
+function vt(e) {
+  var r = ft(e, "string");
+  return W(r) == "symbol" ? r : r + "";
 }
-function q(e, r, t) {
-  return (r = pt(r)) in e ? Object.defineProperty(e, r, {
+function V(e, r, t) {
+  return (r = vt(r)) in e ? Object.defineProperty(e, r, {
     value: t,
     enumerable: !0,
     configurable: !0,
     writable: !0
   }) : e[r] = t, e;
 }
-var gt = 2147483647;
-function he(e, r) {
+var pt = 2147483647;
+function be(e, r) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
@@ -154,52 +154,52 @@ function he(e, r) {
   }
   return t;
 }
-function be(e) {
+function we(e) {
   for (var r = 1; r < arguments.length; r++) {
     var t = arguments[r] != null ? arguments[r] : {};
-    r % 2 ? he(Object(t), !0).forEach(function(n) {
-      q(e, n, t[n]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : he(Object(t)).forEach(function(n) {
+    r % 2 ? be(Object(t), !0).forEach(function(n) {
+      V(e, n, t[n]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : be(Object(t)).forEach(function(n) {
       Object.defineProperty(e, n, Object.getOwnPropertyDescriptor(t, n));
     });
   }
   return e;
 }
-var Y = 2, we = Y / 2;
-function yt(e) {
+var z = 2, De = z / 2;
+function gt(e) {
   return {
     x: Math.floor(e.x),
     y: Math.floor(e.y)
   };
 }
-function mt(e) {
+function yt(e) {
   return {
-    x: e.x - we,
-    y: e.y - we
+    x: e.x - De,
+    y: e.y - De
   };
 }
-function ht(e) {
+function mt(e) {
   return {
     x: Math.max(e.x, 0),
     y: Math.max(e.y, 0)
   };
 }
-function bt(e) {
+function ht(e) {
   return {
-    x: Math.min(e.x, window.innerWidth - Y),
-    y: Math.min(e.y, window.innerHeight - Y)
+    x: Math.min(e.x, window.innerWidth - z),
+    y: Math.min(e.y, window.innerHeight - z)
   };
 }
-function De(e) {
-  var r = e.client, t = bt(ht(mt(yt(r))));
+function Oe(e) {
+  var r = e.client, t = ht(mt(yt(gt(r))));
   return DOMRect.fromRect({
     x: t.x,
     y: t.y,
-    width: Y,
-    height: Y
+    width: z,
+    height: z
   });
 }
-function Oe(e) {
+function Te(e) {
   var r = e.clientRect;
   return {
     left: "".concat(r.left, "px"),
@@ -208,7 +208,7 @@ function Oe(e) {
     height: "".concat(r.height, "px")
   };
 }
-function wt(e) {
+function bt(e) {
   var r = e.client, t = e.clientRect;
   return (
     // is within horizontal bounds
@@ -216,13 +216,13 @@ function wt(e) {
     r.y >= t.y && r.y <= t.y + t.height
   );
 }
-function Dt(e) {
+function wt(e) {
   var r = e.initial, t = document.createElement("div");
-  t.setAttribute(Ke, "true");
-  var n = De({
+  t.setAttribute(Me, "true");
+  var n = Oe({
     client: r
   });
-  Object.assign(t.style, be(be({
+  Object.assign(t.style, we(we({
     // Setting a background color explicitly to avoid any inherited styles.
     // Looks like this could be `opacity: 0`, but worried that _might_
     // cause the element to be ignored on some platforms.
@@ -233,7 +233,7 @@ function Dt(e) {
     padding: 0,
     margin: 0,
     boxSizing: "border-box"
-  }, Oe({
+  }, Te({
     clientRect: n
   })), {}, {
     // We want this element to absorb pointer events,
@@ -242,18 +242,18 @@ function Dt(e) {
     // Want to make sure the honey pot is top of everything else.
     // Don't need to worry about native drag previews, as they will
     // have been rendered (and removed) before the honey pot is rendered
-    zIndex: gt
+    zIndex: pt
   })), document.body.appendChild(t);
-  var a = L.bind(window, {
+  var a = B.bind(window, {
     type: "pointermove",
-    listener: function(l) {
-      var d = {
-        x: l.clientX,
-        y: l.clientY
+    listener: function(o) {
+      var f = {
+        x: o.clientX,
+        y: o.clientY
       };
-      n = De({
-        client: d
-      }), Object.assign(t.style, Oe({
+      n = Oe({
+        client: f
+      }), Object.assign(t.style, Te({
         clientRect: n
       }));
     },
@@ -262,39 +262,39 @@ function Dt(e) {
       capture: !0
     }
   });
-  return function(l) {
-    var d = l.current;
-    if (a(), wt({
-      client: d,
+  return function(o) {
+    var f = o.current;
+    if (a(), bt({
+      client: f,
       clientRect: n
     })) {
       t.remove();
       return;
     }
-    function u() {
-      v(), t.remove();
+    function c() {
+      p(), t.remove();
     }
-    var v = L.bindAll(window, [
+    var p = B.bindAll(window, [
       {
         type: "pointerdown",
-        listener: u
+        listener: c
       },
       {
         type: "pointermove",
-        listener: u
+        listener: c
       },
       {
         type: "focusin",
-        listener: u
+        listener: c
       },
       {
         type: "focusout",
-        listener: u
+        listener: c
       },
       // a 'pointerdown' should happen before 'dragstart', but just being super safe
       {
         type: "dragstart",
-        listener: u
+        listener: c
       },
       // if the user has dragged something out of the window
       // and then is dragging something back into the window
@@ -302,11 +302,11 @@ function Dt(e) {
       // So if we see any of these we need to clear the post drag fix.
       {
         type: "dragenter",
-        listener: u
+        listener: c
       },
       {
         type: "dragover",
-        listener: u
+        listener: c
       }
       // Not adding a "wheel" event listener, as "wheel" by itself does not
       // resolve the bug.
@@ -316,10 +316,10 @@ function Dt(e) {
     });
   };
 }
-function Ot() {
+function Dt() {
   var e = null;
   function r() {
-    return e = null, L.bind(window, {
+    return e = null, B.bind(window, {
       type: "pointermove",
       listener: function(a) {
         e = {
@@ -337,22 +337,22 @@ function Ot() {
   function t() {
     var n = null;
     return function(i) {
-      var l = i.eventName, d = i.payload;
-      if (l === "onDragStart") {
-        var u, v = d.location.initial.input, O = (u = e) !== null && u !== void 0 ? u : {
-          x: v.clientX,
-          y: v.clientY
+      var o = i.eventName, f = i.payload;
+      if (o === "onDragStart") {
+        var c, p = f.location.initial.input, m = (c = e) !== null && c !== void 0 ? c : {
+          x: p.clientX,
+          y: p.clientY
         };
-        n = Dt({
-          initial: O
+        n = wt({
+          initial: m
         });
       }
-      if (l === "onDrop") {
-        var p, y = d.location.current.input;
-        (p = n) === null || p === void 0 || p({
+      if (o === "onDrop") {
+        var y, h = f.location.current.input;
+        (y = n) === null || y === void 0 || y({
           current: {
-            x: y.clientX,
-            y: y.clientY
+            x: h.clientX,
+            y: h.clientY
           }
         }), n = null, e = null;
       }
@@ -363,50 +363,50 @@ function Ot() {
     getOnPostDispatch: t
   };
 }
-function Tt(e) {
-  if (Array.isArray(e)) return oe(e);
+function Ot(e) {
+  if (Array.isArray(e)) return ie(e);
 }
-function Et(e) {
+function Tt(e) {
   if (typeof Symbol < "u" && e[Symbol.iterator] != null || e["@@iterator"] != null) return Array.from(e);
 }
-function St() {
+function Et() {
   throw new TypeError(`Invalid attempt to spread non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
 }
-function $e(e) {
-  return Tt(e) || Et(e) || Fe(e) || St();
+function ze(e) {
+  return Ot(e) || Tt(e) || Re(e) || Et();
 }
-function ce(e) {
+function de(e) {
   var r = null;
   return function() {
     if (!r) {
       for (var n = arguments.length, a = new Array(n), i = 0; i < n; i++)
         a[i] = arguments[i];
-      var l = e.apply(this, a);
+      var o = e.apply(this, a);
       r = {
-        result: l
+        result: o
       };
     }
     return r.result;
   };
 }
-var At = ce(function() {
+var St = de(function() {
   return process.env.NODE_ENV === "test" ? !1 : navigator.userAgent.includes("Firefox");
-}), se = ce(function() {
+}), ce = de(function() {
   if (process.env.NODE_ENV === "test")
     return !1;
   var r = navigator, t = r.userAgent;
   return t.includes("AppleWebKit") && !t.includes("Chrome");
-}), le = {
+}), oe = {
   isLeavingWindow: Symbol("leaving"),
   isEnteringWindow: Symbol("entering")
 };
-function xt(e) {
+function At(e) {
   var r = e.dragLeave;
-  return se() ? r.hasOwnProperty(le.isLeavingWindow) : !1;
+  return ce() ? r.hasOwnProperty(oe.isLeavingWindow) : !1;
 }
 (function() {
-  if (typeof window > "u" || process.env.NODE_ENV === "test" || !se())
+  if (typeof window > "u" || process.env.NODE_ENV === "test" || !ce())
     return;
   function r() {
     return {
@@ -418,7 +418,7 @@ function xt(e) {
   function n() {
     t = r();
   }
-  L.bindAll(
+  B.bindAll(
     window,
     [{
       type: "dragstart",
@@ -434,12 +434,12 @@ function xt(e) {
     }, {
       type: "dragenter",
       listener: function(i) {
-        !t.isOverWindow && t.enterCount === 0 && (i[le.isEnteringWindow] = !0), t.isOverWindow = !0, t.enterCount++;
+        !t.isOverWindow && t.enterCount === 0 && (i[oe.isEnteringWindow] = !0), t.isOverWindow = !0, t.enterCount++;
       }
     }, {
       type: "dragleave",
       listener: function(i) {
-        t.enterCount--, t.isOverWindow && t.enterCount === 0 && (i[le.isLeavingWindow] = !0, t.isOverWindow = !1);
+        t.enterCount--, t.isOverWindow && t.enterCount === 0 && (i[oe.isLeavingWindow] = !0, t.isOverWindow = !1);
       }
     }],
     // using `capture: true` so that adding event listeners
@@ -449,19 +449,19 @@ function xt(e) {
     }
   );
 })();
-function Pt(e) {
+function xt(e) {
   return "nodeName" in e;
 }
+function Pt(e) {
+  return xt(e) && e.ownerDocument !== document;
+}
 function It(e) {
-  return Pt(e) && e.ownerDocument !== document;
+  var r = e.dragLeave, t = r.type, n = r.relatedTarget;
+  return t !== "dragleave" ? !1 : ce() ? At({
+    dragLeave: r
+  }) : n == null ? !0 : St() ? Pt(n) : n instanceof HTMLIFrameElement;
 }
 function jt(e) {
-  var r = e.dragLeave, t = r.type, n = r.relatedTarget;
-  return t !== "dragleave" ? !1 : se() ? xt({
-    dragLeave: r
-  }) : n == null ? !0 : At() ? It(n) : n instanceof HTMLIFrameElement;
-}
-function Ct(e) {
   var r = e.onDragEnd;
   return [
     // ## Detecting drag ending for removed draggables
@@ -505,7 +505,7 @@ function Ct(e) {
     }
   ];
 }
-function W(e) {
+function $(e) {
   return {
     altKey: e.altKey,
     button: e.button,
@@ -519,20 +519,20 @@ function W(e) {
     pageY: e.pageY
   };
 }
-var kt = function(r) {
+var Ct = function(r) {
   var t = [], n = null, a = function() {
-    for (var l = arguments.length, d = new Array(l), u = 0; u < l; u++)
-      d[u] = arguments[u];
-    t = d, !n && (n = requestAnimationFrame(function() {
+    for (var o = arguments.length, f = new Array(o), c = 0; c < o; c++)
+      f[c] = arguments[c];
+    t = f, !n && (n = requestAnimationFrame(function() {
       n = null, r.apply(void 0, t);
     }));
   };
   return a.cancel = function() {
     n && (cancelAnimationFrame(n), n = null);
   }, a;
-}, te = kt(function(e) {
+}, ee = Ct(function(e) {
   return e();
-}), G = /* @__PURE__ */ function() {
+}), q = /* @__PURE__ */ function() {
   var e = null;
   function r(n) {
     var a = requestAnimationFrame(function() {
@@ -551,18 +551,18 @@ var kt = function(r) {
     flush: t
   };
 }();
-function Nt(e) {
+function kt(e) {
   var r = e.source, t = e.initial, n = e.dispatchEvent, a = {
     dropTargets: []
   };
-  function i(d) {
-    n(d), a = {
-      dropTargets: d.payload.location.current.dropTargets
+  function i(f) {
+    n(f), a = {
+      dropTargets: f.payload.location.current.dropTargets
     };
   }
-  var l = {
-    start: function(u) {
-      var v = u.nativeSetDragImage, O = {
+  var o = {
+    start: function(c) {
+      var p = c.nativeSetDragImage, m = {
         current: t,
         previous: a,
         initial: t
@@ -571,59 +571,59 @@ function Nt(e) {
         eventName: "onGenerateDragPreview",
         payload: {
           source: r,
-          location: O,
-          nativeSetDragImage: v
+          location: m,
+          nativeSetDragImage: p
         }
-      }), G.schedule(function() {
+      }), q.schedule(function() {
         i({
           eventName: "onDragStart",
           payload: {
             source: r,
-            location: O
+            location: m
           }
         });
       });
     },
-    dragUpdate: function(u) {
-      var v = u.current;
-      G.flush(), te.cancel(), i({
+    dragUpdate: function(c) {
+      var p = c.current;
+      q.flush(), ee.cancel(), i({
         eventName: "onDropTargetChange",
         payload: {
           source: r,
           location: {
             initial: t,
             previous: a,
-            current: v
+            current: p
           }
         }
       });
     },
-    drag: function(u) {
-      var v = u.current;
-      te(function() {
-        G.flush();
-        var O = {
+    drag: function(c) {
+      var p = c.current;
+      ee(function() {
+        q.flush();
+        var m = {
           initial: t,
           previous: a,
-          current: v
+          current: p
         };
         i({
           eventName: "onDrag",
           payload: {
             source: r,
-            location: O
+            location: m
           }
         });
       });
     },
-    drop: function(u) {
-      var v = u.current, O = u.updatedSourcePayload;
-      G.flush(), te.cancel(), i({
+    drop: function(c) {
+      var p = c.current, m = c.updatedSourcePayload;
+      q.flush(), ee.cancel(), i({
         eventName: "onDrop",
         payload: {
-          source: O ?? r,
+          source: m ?? r,
           location: {
-            current: v,
+            current: p,
             previous: a,
             initial: t
           }
@@ -631,18 +631,18 @@ function Nt(e) {
       });
     }
   };
-  return l;
+  return o;
 }
-var ue = {
+var le = {
   isActive: !1
 };
-function We() {
-  return !ue.isActive;
+function Ye() {
+  return !le.isActive;
 }
-function Lt(e) {
+function Nt(e) {
   return e.dataTransfer ? e.dataTransfer.setDragImage.bind(e.dataTransfer) : null;
 }
-function Bt(e) {
+function Lt(e) {
   var r = e.current, t = e.next;
   if (r.length !== t.length)
     return !0;
@@ -651,68 +651,68 @@ function Bt(e) {
       return !0;
   return !1;
 }
-function Ft(e) {
+function Bt(e) {
   var r = e.event, t = e.dragType, n = e.getDropTargetsOver, a = e.dispatchEvent;
-  if (!We())
+  if (!Ye())
     return;
-  var i = Ht({
+  var i = Ft({
     event: r,
     dragType: t,
     getDropTargetsOver: n
   });
-  ue.isActive = !0;
-  var l = {
+  le.isActive = !0;
+  var o = {
     current: i
   };
-  re({
+  te({
     event: r,
     current: i.dropTargets
   });
-  var d = Nt({
+  var f = kt({
     source: t.payload,
     dispatchEvent: a,
     initial: i
   });
-  function u(s) {
-    var m = Bt({
-      current: l.current.dropTargets,
-      next: s.dropTargets
+  function c(l) {
+    var u = Lt({
+      current: o.current.dropTargets,
+      next: l.dropTargets
     });
-    l.current = s, m && d.dragUpdate({
-      current: l.current
+    o.current = l, u && f.dragUpdate({
+      current: o.current
     });
   }
-  function v(s) {
-    var m = W(s), c = Me(s.target) ? Re({
-      x: m.clientX,
-      y: m.clientY
-    }) : s.target, g = n({
-      target: c,
-      input: m,
+  function p(l) {
+    var u = $(l), v = $e(l.target) ? We({
+      x: u.clientX,
+      y: u.clientY
+    }) : l.target, g = n({
+      target: v,
+      input: u,
       source: t.payload,
-      current: l.current.dropTargets
+      current: o.current.dropTargets
     });
-    g.length && (s.preventDefault(), re({
-      event: s,
+    g.length && (l.preventDefault(), te({
+      event: l,
       current: g
-    })), u({
+    })), c({
       dropTargets: g,
-      input: m
+      input: u
     });
   }
-  function O() {
-    l.current.dropTargets.length && u({
+  function m() {
+    o.current.dropTargets.length && c({
       dropTargets: [],
-      input: l.current.input
-    }), d.drop({
-      current: l.current,
+      input: o.current.input
+    }), f.drop({
+      current: o.current,
       updatedSourcePayload: null
-    }), p();
+    }), y();
   }
-  function p() {
-    ue.isActive = !1, y();
+  function y() {
+    le.isActive = !1, h();
   }
-  var y = L.bindAll(
+  var h = B.bindAll(
     window,
     [{
       // 👋 Note: we are repurposing the `dragover` event as our `drag` event
@@ -722,44 +722,44 @@ function Ft(e) {
       // Because we are binding to `window` - our `dragover` is effectively the same as a `drag`
       // 🦊😤
       type: "dragover",
-      listener: function(m) {
-        v(m), d.drag({
-          current: l.current
+      listener: function(u) {
+        p(u), f.drag({
+          current: o.current
         });
       }
     }, {
       type: "dragenter",
-      listener: v
+      listener: p
     }, {
       type: "dragleave",
-      listener: function(m) {
-        jt({
-          dragLeave: m
-        }) && (u({
-          input: l.current.input,
+      listener: function(u) {
+        It({
+          dragLeave: u
+        }) && (c({
+          input: o.current.input,
           dropTargets: []
-        }), t.startedFrom === "external" && O());
+        }), t.startedFrom === "external" && m());
       }
     }, {
       // A "drop" can only happen if the browser allowed the drop
       type: "drop",
-      listener: function(m) {
-        if (l.current = {
-          dropTargets: l.current.dropTargets,
-          input: W(m)
-        }, !l.current.dropTargets.length) {
-          O();
+      listener: function(u) {
+        if (o.current = {
+          dropTargets: o.current.dropTargets,
+          input: $(u)
+        }, !o.current.dropTargets.length) {
+          m();
           return;
         }
-        m.preventDefault(), re({
-          event: m,
-          current: l.current.dropTargets
-        }), d.drop({
-          current: l.current,
+        u.preventDefault(), te({
+          event: u,
+          current: o.current.dropTargets
+        }), f.drop({
+          current: o.current,
           // When dropping something native, we need to extract the latest
           // `.items` from the "drop" event as it is now accessible
-          updatedSourcePayload: t.type === "external" ? t.getDropPayload(m) : null
-        }), p();
+          updatedSourcePayload: t.type === "external" ? t.getDropPayload(u) : null
+        }), y();
       }
     }, {
       // "dragend" fires when on the drag source (eg a draggable element)
@@ -770,14 +770,14 @@ function Ft(e) {
       // This "dragend" listener will not fire if there was a successful drop
       // as we will have already removed the event listener
       type: "dragend",
-      listener: function(m) {
-        l.current = {
-          dropTargets: l.current.dropTargets,
-          input: W(m)
-        }, O();
+      listener: function(u) {
+        o.current = {
+          dropTargets: o.current.dropTargets,
+          input: $(u)
+        }, m();
       }
-    }].concat($e(Ct({
-      onDragEnd: O
+    }].concat(ze(jt({
+      onDragEnd: m
     }))),
     // Once we have started a managed drag operation it is important that we see / own all drag events
     // We got one adoption bug pop up where some code was stopping (`event.stopPropagation()`)
@@ -787,16 +787,16 @@ function Ft(e) {
       capture: !0
     }
   );
-  d.start({
-    nativeSetDragImage: Lt(r)
+  f.start({
+    nativeSetDragImage: Nt(r)
   });
 }
-function re(e) {
+function te(e) {
   var r, t = e.event, n = e.current, a = (r = n[0]) === null || r === void 0 ? void 0 : r.dropEffect;
   a != null && t.dataTransfer && (t.dataTransfer.dropEffect = a);
 }
-function Ht(e) {
-  var r = e.event, t = e.dragType, n = e.getDropTargetsOver, a = W(r);
+function Ft(e) {
+  var r = e.event, t = e.dragType, n = e.getDropTargetsOver, a = $(r);
   if (t.startedFrom === "external")
     return {
       input: a,
@@ -813,12 +813,12 @@ function Ht(e) {
     dropTargets: i
   };
 }
-var Te = {
-  canStart: We,
-  start: Ft
-}, de = /* @__PURE__ */ new Map();
-function Kt(e) {
-  var r = e.typeKey, t = e.mount, n = de.get(r);
+var Ee = {
+  canStart: Ye,
+  start: Bt
+}, ue = /* @__PURE__ */ new Map();
+function Ht(e) {
+  var r = e.typeKey, t = e.mount, n = ue.get(r);
   if (n)
     return n.usageCount++, n;
   var a = {
@@ -826,21 +826,21 @@ function Kt(e) {
     unmount: t(),
     usageCount: 1
   };
-  return de.set(r, a), a;
+  return ue.set(r, a), a;
 }
-function Mt(e) {
-  var r = Kt(e);
+function Rt(e) {
+  var r = Ht(e);
   return function() {
-    r.usageCount--, !(r.usageCount > 0) && (r.unmount(), de.delete(e.typeKey));
+    r.usageCount--, !(r.usageCount > 0) && (r.unmount(), ue.delete(e.typeKey));
   };
 }
-function ze(e, r) {
+function Ue(e, r) {
   var t = r.attribute, n = r.value;
   return e.setAttribute(t, n), function() {
     return e.removeAttribute(t);
   };
 }
-function Ee(e, r) {
+function Se(e, r) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
@@ -850,274 +850,50 @@ function Ee(e, r) {
   }
   return t;
 }
-function N(e) {
+function L(e) {
   for (var r = 1; r < arguments.length; r++) {
     var t = arguments[r] != null ? arguments[r] : {};
-    r % 2 ? Ee(Object(t), !0).forEach(function(n) {
-      q(e, n, t[n]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : Ee(Object(t)).forEach(function(n) {
+    r % 2 ? Se(Object(t), !0).forEach(function(n) {
+      V(e, n, t[n]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : Se(Object(t)).forEach(function(n) {
       Object.defineProperty(e, n, Object.getOwnPropertyDescriptor(t, n));
     });
   }
   return e;
 }
-function ne(e, r) {
+function re(e, r) {
   var t = typeof Symbol < "u" && e[Symbol.iterator] || e["@@iterator"];
   if (!t) {
-    if (Array.isArray(e) || (t = Rt(e)) || r) {
+    if (Array.isArray(e) || (t = Kt(e)) || r) {
       t && (e = t);
       var n = 0, a = function() {
       };
       return { s: a, n: function() {
         return n >= e.length ? { done: !0 } : { done: !1, value: e[n++] };
-      }, e: function(v) {
-        throw v;
+      }, e: function(p) {
+        throw p;
       }, f: a };
     }
     throw new TypeError(`Invalid attempt to iterate non-iterable instance.
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
   }
-  var i = !0, l = !1, d;
+  var i = !0, o = !1, f;
   return { s: function() {
     t = t.call(e);
   }, n: function() {
-    var v = t.next();
-    return i = v.done, v;
-  }, e: function(v) {
-    l = !0, d = v;
+    var p = t.next();
+    return i = p.done, p;
+  }, e: function(p) {
+    o = !0, f = p;
   }, f: function() {
     try {
       !i && t.return != null && t.return();
     } finally {
-      if (l) throw d;
+      if (o) throw f;
     }
   } };
 }
-function Rt(e, r) {
-  if (e) {
-    if (typeof e == "string") return Se(e, r);
-    var t = Object.prototype.toString.call(e).slice(8, -1);
-    if (t === "Object" && e.constructor && (t = e.constructor.name), t === "Map" || t === "Set") return Array.from(e);
-    if (t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t)) return Se(e, r);
-  }
-}
-function Se(e, r) {
-  (r == null || r > e.length) && (r = e.length);
-  for (var t = 0, n = new Array(r); t < r; t++) n[t] = e[t];
-  return n;
-}
-function ae(e) {
-  return e.slice(0).reverse();
-}
-function $t(e) {
-  var r = e.typeKey, t = e.defaultDropEffect, n = /* @__PURE__ */ new WeakMap(), a = "data-drop-target-for-".concat(r), i = "[".concat(a, "]");
-  function l(s) {
-    return n.set(s.element, s), function() {
-      return n.delete(s.element);
-    };
-  }
-  function d(s) {
-    if (process.env.NODE_ENV !== "production") {
-      var m = n.get(s.element);
-      m && console.warn("You have already registered a [".concat(r, "] dropTarget on the same element"), {
-        existing: m,
-        proposed: s
-      }), s.element instanceof HTMLIFrameElement && console.warn(`
-            We recommend not registering <iframe> elements as drop targets
-            as it can result in some strange browser event ordering.
-          `.replace(/\s{2,}/g, " ").trim());
-    }
-    return X(ze(s.element, {
-      attribute: a,
-      value: "true"
-    }), l(s));
-  }
-  function u(s) {
-    var m, c, g, o, h = s.source, b = s.target, w = s.input, f = s.result, D = f === void 0 ? [] : f;
-    if (b == null)
-      return D;
-    if (!(b instanceof Element))
-      return b instanceof Node ? u({
-        source: h,
-        target: b.parentElement,
-        input: w,
-        result: D
-      }) : D;
-    var x = b.closest(i);
-    if (x == null)
-      return D;
-    var S = n.get(x);
-    if (S == null)
-      return D;
-    var P = {
-      input: w,
-      source: h,
-      element: S.element
-    };
-    if (S.canDrop && !S.canDrop(P))
-      return u({
-        source: h,
-        target: S.element.parentElement,
-        input: w,
-        result: D
-      });
-    var I = (m = (c = S.getData) === null || c === void 0 ? void 0 : c.call(S, P)) !== null && m !== void 0 ? m : {}, j = (g = (o = S.getDropEffect) === null || o === void 0 ? void 0 : o.call(S, P)) !== null && g !== void 0 ? g : t, T = {
-      data: I,
-      element: S.element,
-      dropEffect: j,
-      // we are collecting _actual_ drop targets, so these are
-      // being applied _not_ due to stickiness
-      isActiveDueToStickiness: !1
-    };
-    return u({
-      source: h,
-      target: S.element.parentElement,
-      input: w,
-      // Using bubble ordering. Same ordering as `event.getPath()`
-      result: [].concat($e(D), [T])
-    });
-  }
-  function v(s) {
-    var m = s.eventName, c = s.payload, g = ne(c.location.current.dropTargets), o;
-    try {
-      for (g.s(); !(o = g.n()).done; ) {
-        var h, b = o.value, w = n.get(b.element), f = N(N({}, c), {}, {
-          self: b
-        });
-        w == null || (h = w[m]) === null || h === void 0 || h.call(
-          w,
-          // I cannot seem to get the types right here.
-          // TS doesn't seem to like that one event can need `nativeSetDragImage`
-          // @ts-expect-error
-          f
-        );
-      }
-    } catch (D) {
-      g.e(D);
-    } finally {
-      g.f();
-    }
-  }
-  var O = {
-    onGenerateDragPreview: v,
-    onDrag: v,
-    onDragStart: v,
-    onDrop: v,
-    onDropTargetChange: function(m) {
-      var c = m.payload, g = new Set(c.location.current.dropTargets.map(function(M) {
-        return M.element;
-      })), o = /* @__PURE__ */ new Set(), h = ne(c.location.previous.dropTargets), b;
-      try {
-        for (h.s(); !(b = h.n()).done; ) {
-          var w, f = b.value;
-          o.add(f.element);
-          var D = n.get(f.element), x = g.has(f.element), S = N(N({}, c), {}, {
-            self: f
-          });
-          if (D == null || (w = D.onDropTargetChange) === null || w === void 0 || w.call(D, S), !x) {
-            var P;
-            D == null || (P = D.onDragLeave) === null || P === void 0 || P.call(D, S);
-          }
-        }
-      } catch (M) {
-        h.e(M);
-      } finally {
-        h.f();
-      }
-      var I = ne(c.location.current.dropTargets), j;
-      try {
-        for (I.s(); !(j = I.n()).done; ) {
-          var T, A, B = j.value;
-          if (!o.has(B.element)) {
-            var K = N(N({}, c), {}, {
-              self: B
-            }), k = n.get(B.element);
-            k == null || (T = k.onDropTargetChange) === null || T === void 0 || T.call(k, K), k == null || (A = k.onDragEnter) === null || A === void 0 || A.call(k, K);
-          }
-        }
-      } catch (M) {
-        I.e(M);
-      } finally {
-        I.f();
-      }
-    }
-  };
-  function p(s) {
-    O[s.eventName](s);
-  }
-  function y(s) {
-    var m = s.source, c = s.target, g = s.input, o = s.current, h = u({
-      source: m,
-      target: c,
-      input: g
-    });
-    if (h.length >= o.length)
-      return h;
-    for (var b = ae(o), w = ae(h), f = [], D = 0; D < b.length; D++) {
-      var x, S = b[D], P = w[D];
-      if (P != null) {
-        f.push(P);
-        continue;
-      }
-      var I = f[D - 1], j = b[D - 1];
-      if ((I == null ? void 0 : I.element) !== (j == null ? void 0 : j.element))
-        break;
-      var T = n.get(S.element);
-      if (!T)
-        break;
-      var A = {
-        input: g,
-        source: m,
-        element: T.element
-      };
-      if (T.canDrop && !T.canDrop(A) || !((x = T.getIsSticky) !== null && x !== void 0 && x.call(T, A)))
-        break;
-      f.push(N(N({}, S), {}, {
-        // making it clear to consumers this drop target is active due to stickiness
-        isActiveDueToStickiness: !0
-      }));
-    }
-    return ae(f);
-  }
-  return {
-    dropTargetForConsumers: d,
-    getIsOver: y,
-    dispatchEvent: p
-  };
-}
-function Wt(e, r) {
-  var t = typeof Symbol < "u" && e[Symbol.iterator] || e["@@iterator"];
-  if (!t) {
-    if (Array.isArray(e) || (t = zt(e)) || r) {
-      t && (e = t);
-      var n = 0, a = function() {
-      };
-      return { s: a, n: function() {
-        return n >= e.length ? { done: !0 } : { done: !1, value: e[n++] };
-      }, e: function(v) {
-        throw v;
-      }, f: a };
-    }
-    throw new TypeError(`Invalid attempt to iterate non-iterable instance.
-In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
-  }
-  var i = !0, l = !1, d;
-  return { s: function() {
-    t = t.call(e);
-  }, n: function() {
-    var v = t.next();
-    return i = v.done, v;
-  }, e: function(v) {
-    l = !0, d = v;
-  }, f: function() {
-    try {
-      !i && t.return != null && t.return();
-    } finally {
-      if (l) throw d;
-    }
-  } };
-}
-function zt(e, r) {
+function Kt(e, r) {
   if (e) {
     if (typeof e == "string") return Ae(e, r);
     var t = Object.prototype.toString.call(e).slice(8, -1);
@@ -1130,7 +906,231 @@ function Ae(e, r) {
   for (var t = 0, n = new Array(r); t < r; t++) n[t] = e[t];
   return n;
 }
+function ne(e) {
+  return e.slice(0).reverse();
+}
+function Mt(e) {
+  var r = e.typeKey, t = e.defaultDropEffect, n = /* @__PURE__ */ new WeakMap(), a = "data-drop-target-for-".concat(r), i = "[".concat(a, "]");
+  function o(l) {
+    return n.set(l.element, l), function() {
+      return n.delete(l.element);
+    };
+  }
+  function f(l) {
+    if (process.env.NODE_ENV !== "production") {
+      var u = n.get(l.element);
+      u && console.warn("You have already registered a [".concat(r, "] dropTarget on the same element"), {
+        existing: u,
+        proposed: l
+      }), l.element instanceof HTMLIFrameElement && console.warn(`
+            We recommend not registering <iframe> elements as drop targets
+            as it can result in some strange browser event ordering.
+          `.replace(/\s{2,}/g, " ").trim());
+    }
+    return U(Ue(l.element, {
+      attribute: a,
+      value: "true"
+    }), o(l));
+  }
+  function c(l) {
+    var u, v, g, b, d = l.source, w = l.target, D = l.input, T = l.result, s = T === void 0 ? [] : T;
+    if (w == null)
+      return s;
+    if (!(w instanceof Element))
+      return w instanceof Node ? c({
+        source: d,
+        target: w.parentElement,
+        input: D,
+        result: s
+      }) : s;
+    var A = w.closest(i);
+    if (A == null)
+      return s;
+    var E = n.get(A);
+    if (E == null)
+      return s;
+    var P = {
+      input: D,
+      source: d,
+      element: E.element
+    };
+    if (E.canDrop && !E.canDrop(P))
+      return c({
+        source: d,
+        target: E.element.parentElement,
+        input: D,
+        result: s
+      });
+    var I = (u = (v = E.getData) === null || v === void 0 ? void 0 : v.call(E, P)) !== null && u !== void 0 ? u : {}, j = (g = (b = E.getDropEffect) === null || b === void 0 ? void 0 : b.call(E, P)) !== null && g !== void 0 ? g : t, x = {
+      data: I,
+      element: E.element,
+      dropEffect: j,
+      // we are collecting _actual_ drop targets, so these are
+      // being applied _not_ due to stickiness
+      isActiveDueToStickiness: !1
+    };
+    return c({
+      source: d,
+      target: E.element.parentElement,
+      input: D,
+      // Using bubble ordering. Same ordering as `event.getPath()`
+      result: [].concat(ze(s), [x])
+    });
+  }
+  function p(l) {
+    var u = l.eventName, v = l.payload, g = re(v.location.current.dropTargets), b;
+    try {
+      for (g.s(); !(b = g.n()).done; ) {
+        var d, w = b.value, D = n.get(w.element), T = L(L({}, v), {}, {
+          self: w
+        });
+        D == null || (d = D[u]) === null || d === void 0 || d.call(
+          D,
+          // I cannot seem to get the types right here.
+          // TS doesn't seem to like that one event can need `nativeSetDragImage`
+          // @ts-expect-error
+          T
+        );
+      }
+    } catch (s) {
+      g.e(s);
+    } finally {
+      g.f();
+    }
+  }
+  var m = {
+    onGenerateDragPreview: p,
+    onDrag: p,
+    onDragStart: p,
+    onDrop: p,
+    onDropTargetChange: function(u) {
+      var v = u.payload, g = new Set(v.location.current.dropTargets.map(function(R) {
+        return R.element;
+      })), b = /* @__PURE__ */ new Set(), d = re(v.location.previous.dropTargets), w;
+      try {
+        for (d.s(); !(w = d.n()).done; ) {
+          var D, T = w.value;
+          b.add(T.element);
+          var s = n.get(T.element), A = g.has(T.element), E = L(L({}, v), {}, {
+            self: T
+          });
+          if (s == null || (D = s.onDropTargetChange) === null || D === void 0 || D.call(s, E), !A) {
+            var P;
+            s == null || (P = s.onDragLeave) === null || P === void 0 || P.call(s, E);
+          }
+        }
+      } catch (R) {
+        d.e(R);
+      } finally {
+        d.f();
+      }
+      var I = re(v.location.current.dropTargets), j;
+      try {
+        for (I.s(); !(j = I.n()).done; ) {
+          var x, S, C = j.value;
+          if (!b.has(C.element)) {
+            var ve = L(L({}, v), {}, {
+              self: C
+            }), N = n.get(C.element);
+            N == null || (x = N.onDropTargetChange) === null || x === void 0 || x.call(N, ve), N == null || (S = N.onDragEnter) === null || S === void 0 || S.call(N, ve);
+          }
+        }
+      } catch (R) {
+        I.e(R);
+      } finally {
+        I.f();
+      }
+    }
+  };
+  function y(l) {
+    m[l.eventName](l);
+  }
+  function h(l) {
+    var u = l.source, v = l.target, g = l.input, b = l.current, d = c({
+      source: u,
+      target: v,
+      input: g
+    });
+    if (d.length >= b.length)
+      return d;
+    for (var w = ne(b), D = ne(d), T = [], s = 0; s < w.length; s++) {
+      var A, E = w[s], P = D[s];
+      if (P != null) {
+        T.push(P);
+        continue;
+      }
+      var I = T[s - 1], j = w[s - 1];
+      if ((I == null ? void 0 : I.element) !== (j == null ? void 0 : j.element))
+        break;
+      var x = n.get(E.element);
+      if (!x)
+        break;
+      var S = {
+        input: g,
+        source: u,
+        element: x.element
+      };
+      if (x.canDrop && !x.canDrop(S) || !((A = x.getIsSticky) !== null && A !== void 0 && A.call(x, S)))
+        break;
+      T.push(L(L({}, E), {}, {
+        // making it clear to consumers this drop target is active due to stickiness
+        isActiveDueToStickiness: !0
+      }));
+    }
+    return ne(T);
+  }
+  return {
+    dropTargetForConsumers: f,
+    getIsOver: h,
+    dispatchEvent: y
+  };
+}
+function $t(e, r) {
+  var t = typeof Symbol < "u" && e[Symbol.iterator] || e["@@iterator"];
+  if (!t) {
+    if (Array.isArray(e) || (t = Wt(e)) || r) {
+      t && (e = t);
+      var n = 0, a = function() {
+      };
+      return { s: a, n: function() {
+        return n >= e.length ? { done: !0 } : { done: !1, value: e[n++] };
+      }, e: function(p) {
+        throw p;
+      }, f: a };
+    }
+    throw new TypeError(`Invalid attempt to iterate non-iterable instance.
+In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
+  }
+  var i = !0, o = !1, f;
+  return { s: function() {
+    t = t.call(e);
+  }, n: function() {
+    var p = t.next();
+    return i = p.done, p;
+  }, e: function(p) {
+    o = !0, f = p;
+  }, f: function() {
+    try {
+      !i && t.return != null && t.return();
+    } finally {
+      if (o) throw f;
+    }
+  } };
+}
+function Wt(e, r) {
+  if (e) {
+    if (typeof e == "string") return xe(e, r);
+    var t = Object.prototype.toString.call(e).slice(8, -1);
+    if (t === "Object" && e.constructor && (t = e.constructor.name), t === "Map" || t === "Set") return Array.from(e);
+    if (t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t)) return xe(e, r);
+  }
+}
 function xe(e, r) {
+  (r == null || r > e.length) && (r = e.length);
+  for (var t = 0, n = new Array(r); t < r; t++) n[t] = e[t];
+  return n;
+}
+function Pe(e, r) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
@@ -1140,59 +1140,59 @@ function xe(e, r) {
   }
   return t;
 }
-function Yt(e) {
+function zt(e) {
   for (var r = 1; r < arguments.length; r++) {
     var t = arguments[r] != null ? arguments[r] : {};
-    r % 2 ? xe(Object(t), !0).forEach(function(n) {
-      q(e, n, t[n]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : xe(Object(t)).forEach(function(n) {
+    r % 2 ? Pe(Object(t), !0).forEach(function(n) {
+      V(e, n, t[n]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : Pe(Object(t)).forEach(function(n) {
       Object.defineProperty(e, n, Object.getOwnPropertyDescriptor(t, n));
     });
   }
   return e;
 }
-function Ut() {
+function Yt() {
   var e = /* @__PURE__ */ new Set(), r = null;
   function t(i) {
     r && (!i.canMonitor || i.canMonitor(r.canMonitorArgs)) && r.active.add(i);
   }
   function n(i) {
-    var l = Yt({}, i);
-    return e.add(l), t(l), function() {
-      e.delete(l), r && r.active.delete(l);
+    var o = zt({}, i);
+    return e.add(o), t(o), function() {
+      e.delete(o), r && r.active.delete(o);
     };
   }
   function a(i) {
-    var l = i.eventName, d = i.payload;
-    if (l === "onGenerateDragPreview") {
+    var o = i.eventName, f = i.payload;
+    if (o === "onGenerateDragPreview") {
       r = {
         canMonitorArgs: {
-          initial: d.location.initial,
-          source: d.source
+          initial: f.location.initial,
+          source: f.source
         },
         active: /* @__PURE__ */ new Set()
       };
-      var u = Wt(e), v;
+      var c = $t(e), p;
       try {
-        for (u.s(); !(v = u.n()).done; ) {
-          var O = v.value;
-          t(O);
+        for (c.s(); !(p = c.n()).done; ) {
+          var m = p.value;
+          t(m);
         }
       } catch (g) {
-        u.e(g);
+        c.e(g);
       } finally {
-        u.f();
+        c.f();
       }
     }
     if (r) {
-      for (var p = Array.from(r.active), y = 0, s = p; y < s.length; y++) {
-        var m = s[y];
-        if (r.active.has(m)) {
-          var c;
-          (c = m[l]) === null || c === void 0 || c.call(m, d);
+      for (var y = Array.from(r.active), h = 0, l = y; h < l.length; h++) {
+        var u = l[h];
+        if (r.active.has(u)) {
+          var v;
+          (v = u[o]) === null || v === void 0 || v.call(u, f);
         }
       }
-      l === "onDrop" && (r.active.clear(), r = null);
+      o === "onDrop" && (r.active.clear(), r = null);
     }
   }
   return {
@@ -1200,58 +1200,58 @@ function Ut() {
     monitorForConsumers: n
   };
 }
-function Xt(e) {
-  var r = e.typeKey, t = e.mount, n = e.dispatchEventToSource, a = e.onPostDispatch, i = e.defaultDropEffect, l = Ut(), d = $t({
+function Ut(e) {
+  var r = e.typeKey, t = e.mount, n = e.dispatchEventToSource, a = e.onPostDispatch, i = e.defaultDropEffect, o = Yt(), f = Mt({
     typeKey: r,
     defaultDropEffect: i
   });
-  function u(p) {
-    n == null || n(p), d.dispatchEvent(p), l.dispatchEvent(p), a == null || a(p);
+  function c(y) {
+    n == null || n(y), f.dispatchEvent(y), o.dispatchEvent(y), a == null || a(y);
   }
-  function v(p) {
-    var y = p.event, s = p.dragType;
-    Te.start({
-      event: y,
-      dragType: s,
-      getDropTargetsOver: d.getIsOver,
-      dispatchEvent: u
+  function p(y) {
+    var h = y.event, l = y.dragType;
+    Ee.start({
+      event: h,
+      dragType: l,
+      getDropTargetsOver: f.getIsOver,
+      dispatchEvent: c
     });
   }
-  function O() {
-    function p() {
-      var y = {
-        canStart: Te.canStart,
-        start: v
+  function m() {
+    function y() {
+      var h = {
+        canStart: Ee.canStart,
+        start: p
       };
-      return t(y);
+      return t(h);
     }
-    return Mt({
+    return Rt({
       typeKey: r,
-      mount: p
+      mount: y
     });
   }
   return {
-    registerUsage: O,
-    dropTarget: d.dropTargetForConsumers,
-    monitor: l.monitorForConsumers
+    registerUsage: m,
+    dropTarget: f.dropTargetForConsumers,
+    monitor: o.monitorForConsumers
   };
 }
-var Vt = ce(function() {
+var Xt = de(function() {
   return navigator.userAgent.toLocaleLowerCase().includes("android");
-}), qt = "pdnd:android-fallback", Pe = "text/plain", Gt = "text/uri-list", Zt = "application/vnd.pdnd", U = /* @__PURE__ */ new WeakMap();
-function _t(e) {
-  return U.set(e.element, e), function() {
-    U.delete(e.element);
+}), Vt = "pdnd:android-fallback", Ie = "text/plain", qt = "text/uri-list", Gt = "application/vnd.pdnd", Y = /* @__PURE__ */ new WeakMap();
+function Zt(e) {
+  return Y.set(e.element, e), function() {
+    Y.delete(e.element);
   };
 }
-var Ie = Ot(), fe = Xt({
+var je = Dt(), se = Ut({
   typeKey: "element",
   defaultDropEffect: "move",
   mount: function(r) {
-    return X(Ie.bindEvents(), L.bind(document, {
+    return U(je.bindEvents(), B.bind(document, {
       type: "dragstart",
       listener: function(n) {
-        var a, i, l, d, u, v;
+        var a, i, o, f, c, p;
         if (r.canStart(n) && !n.defaultPrevented) {
           if (!n.dataTransfer) {
             process.env.NODE_ENV !== "production" && console.warn(`
@@ -1265,47 +1265,47 @@ var Ie = Ot(), fe = Xt({
             `.replace(/ {2}/g, ""));
             return;
           }
-          var O = n.target;
-          if (!(O instanceof HTMLElement))
+          var m = n.target;
+          if (!(m instanceof HTMLElement))
             return null;
-          var p = U.get(O);
-          if (!p)
+          var y = Y.get(m);
+          if (!y)
             return null;
-          var y = W(n), s = {
-            element: p.element,
-            dragHandle: (a = p.dragHandle) !== null && a !== void 0 ? a : null,
-            input: y
+          var h = $(n), l = {
+            element: y.element,
+            dragHandle: (a = y.dragHandle) !== null && a !== void 0 ? a : null,
+            input: h
           };
-          if (p.canDrag && !p.canDrag(s))
+          if (y.canDrag && !y.canDrag(l))
             return n.preventDefault(), null;
-          if (p.dragHandle) {
-            var m = Re({
-              x: y.clientX,
-              y: y.clientY
+          if (y.dragHandle) {
+            var u = We({
+              x: h.clientX,
+              y: h.clientY
             });
-            if (!p.dragHandle.contains(m))
+            if (!y.dragHandle.contains(u))
               return n.preventDefault(), null;
           }
-          var c = (i = (l = p.getInitialDataForExternal) === null || l === void 0 ? void 0 : l.call(p, s)) !== null && i !== void 0 ? i : null;
-          if (c)
-            for (var g = 0, o = Object.entries(c); g < o.length; g++) {
-              var h = He(o[g], 2), b = h[0], w = h[1];
-              n.dataTransfer.setData(b, w ?? "");
+          var v = (i = (o = y.getInitialDataForExternal) === null || o === void 0 ? void 0 : o.call(y, l)) !== null && i !== void 0 ? i : null;
+          if (v)
+            for (var g = 0, b = Object.entries(v); g < b.length; g++) {
+              var d = Ke(b[g], 2), w = d[0], D = d[1];
+              n.dataTransfer.setData(w, D ?? "");
             }
-          var f = n.dataTransfer.types;
-          Vt() && !f.includes(Pe) && !f.includes(Gt) && n.dataTransfer.setData(Pe, qt), n.dataTransfer.setData(Zt, "");
-          var D = {
-            element: p.element,
-            dragHandle: (d = p.dragHandle) !== null && d !== void 0 ? d : null,
-            data: (u = (v = p.getInitialData) === null || v === void 0 ? void 0 : v.call(p, s)) !== null && u !== void 0 ? u : {}
-          }, x = {
+          var T = n.dataTransfer.types;
+          Xt() && !T.includes(Ie) && !T.includes(qt) && n.dataTransfer.setData(Ie, Vt), n.dataTransfer.setData(Gt, "");
+          var s = {
+            element: y.element,
+            dragHandle: (f = y.dragHandle) !== null && f !== void 0 ? f : null,
+            data: (c = (p = y.getInitialData) === null || p === void 0 ? void 0 : p.call(y, l)) !== null && c !== void 0 ? c : {}
+          }, A = {
             type: "element",
-            payload: D,
+            payload: s,
             startedFrom: "internal"
           };
           r.start({
             event: n,
-            dragType: x
+            dragType: A
           });
         }
       }
@@ -1313,7 +1313,7 @@ var Ie = Ot(), fe = Xt({
   },
   dispatchEventToSource: function(r) {
     var t, n, a = r.eventName, i = r.payload;
-    (t = U.get(i.source.element)) === null || t === void 0 || (n = t[a]) === null || n === void 0 || n.call(
+    (t = Y.get(i.source.element)) === null || t === void 0 || (n = t[a]) === null || n === void 0 || n.call(
       t,
       // I cannot seem to get the types right here.
       // TS doesn't seem to like that one event can need `nativeSetDragImage`
@@ -1321,33 +1321,33 @@ var Ie = Ot(), fe = Xt({
       i
     );
   },
-  onPostDispatch: Ie.getOnPostDispatch()
-}), Jt = fe.dropTarget, Ye = fe.monitor;
-function Qt(e) {
+  onPostDispatch: je.getOnPostDispatch()
+}), _t = se.dropTarget, Xe = se.monitor;
+function Jt(e) {
   if (process.env.NODE_ENV !== "production" && e.dragHandle && !e.element.contains(e.dragHandle) && console.warn("Drag handle element must be contained in draggable element", {
     element: e.element,
     dragHandle: e.dragHandle
   }), process.env.NODE_ENV !== "production") {
-    var r = U.get(e.element);
+    var r = Y.get(e.element);
     r && console.warn("You have already registered a `draggable` on the same element", {
       existing: r,
       proposed: e
     });
   }
-  return X(
+  return U(
     // making the draggable register the adapter rather than drop targets
     // this is because you *must* have a draggable element to start a drag
     // but you _might_ not have any drop targets immediately
     // (You might create drop targets async)
-    fe.registerUsage(),
-    _t(e),
-    ze(e.element, {
+    se.registerUsage(),
+    Zt(e),
+    Ue(e.element, {
       attribute: "draggable",
       value: "true"
     })
   );
 }
-function er(e, r) {
+function Qt(e, r) {
   if (e == null) return {};
   var t = {};
   for (var n in e) if ({}.hasOwnProperty.call(e, n)) {
@@ -1356,17 +1356,17 @@ function er(e, r) {
   }
   return t;
 }
-function tr(e, r) {
+function er(e, r) {
   if (e == null) return {};
-  var t, n, a = er(e, r);
+  var t, n, a = Qt(e, r);
   if (Object.getOwnPropertySymbols) {
     var i = Object.getOwnPropertySymbols(e);
     for (n = 0; n < i.length; n++) t = i[n], r.includes(t) || {}.propertyIsEnumerable.call(e, t) && (a[t] = e[t]);
   }
   return a;
 }
-var rr = ["block"];
-function je(e, r) {
+var tr = ["block"];
+function Ce(e, r) {
   var t = Object.keys(e);
   if (Object.getOwnPropertySymbols) {
     var n = Object.getOwnPropertySymbols(e);
@@ -1376,99 +1376,99 @@ function je(e, r) {
   }
   return t;
 }
-function Ce(e) {
+function ke(e) {
   for (var r = 1; r < arguments.length; r++) {
     var t = arguments[r] != null ? arguments[r] : {};
-    r % 2 ? je(Object(t), !0).forEach(function(n) {
-      q(e, n, t[n]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : je(Object(t)).forEach(function(n) {
+    r % 2 ? Ce(Object(t), !0).forEach(function(n) {
+      V(e, n, t[n]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : Ce(Object(t)).forEach(function(n) {
       Object.defineProperty(e, n, Object.getOwnPropertyDescriptor(t, n));
     });
   }
   return e;
 }
-var Ue = Symbol("tree-item-instruction");
-function nr(e) {
+var Ve = Symbol("tree-item-instruction");
+function rr(e) {
   return {
     x: (e.right + e.left) / 2,
     y: (e.bottom + e.top) / 2
   };
 }
-function ie(e) {
+function ae(e) {
   var r = e.client, t = e.borderBox, n = t.height / 4;
   return r.y <= t.top + n ? "reorder-above" : r.y >= t.bottom - n ? "reorder-below" : "make-child";
 }
-function ar(e) {
-  var r = e.element, t = e.input, n = e.currentLevel, a = e.indentPerLevel, i = e.mode, l = {
+function nr(e) {
+  var r = e.element, t = e.input, n = e.currentLevel, a = e.indentPerLevel, i = e.mode, o = {
     x: t.clientX,
     y: t.clientY
-  }, d = r.getBoundingClientRect();
+  }, f = r.getBoundingClientRect();
   if (i === "standard") {
-    var u = ie({
-      borderBox: d,
-      client: l
+    var c = ae({
+      borderBox: f,
+      client: o
     });
     return {
-      type: u,
+      type: c,
       indentPerLevel: a,
       currentLevel: n
     };
   }
-  var v = nr(d);
+  var p = rr(f);
   if (i === "expanded") {
-    var O = ie({
-      borderBox: d,
-      client: l
+    var m = ae({
+      borderBox: f,
+      client: o
     });
     return {
       // Use the "standard" hitbox for "reorder above",
       // The rest of the item is "make-child"
-      type: O === "reorder-above" ? O : "make-child",
+      type: m === "reorder-above" ? m : "make-child",
       indentPerLevel: a,
       currentLevel: n
     };
   }
-  var p = a * n;
-  if (l.x < d.left + p) {
-    if (l.y < v.y)
+  var y = a * n;
+  if (o.x < f.left + y) {
+    if (o.y < p.y)
       return {
         type: "reorder-above",
         indentPerLevel: a,
         currentLevel: n
       };
-    var y = (l.x - d.left) / a, s = Math.max(Math.floor(y), 0);
+    var h = (o.x - f.left) / a, l = Math.max(Math.floor(h), 0);
     return {
       type: "reparent",
-      desiredLevel: s,
+      desiredLevel: l,
       indentPerLevel: a,
       currentLevel: n
     };
   }
   return {
-    type: ie({
-      borderBox: d,
-      client: l
+    type: ae({
+      borderBox: f,
+      client: o
     }),
     indentPerLevel: a,
     currentLevel: n
   };
 }
-function ir(e, r) {
+function ar(e, r) {
   var t = Object.keys(e).sort(), n = Object.keys(r).sort();
   return t.length !== n.length ? !1 : t.every(function(a) {
     return e[a] === r[a];
   });
 }
-function Xe(e, r) {
-  return e.type !== r.type ? !1 : e.type === "instruction-blocked" && r.type === "instruction-blocked" ? Xe(e.desired, r.desired) : ir(e, r);
+function qe(e, r) {
+  return e.type !== r.type ? !1 : e.type === "instruction-blocked" && r.type === "instruction-blocked" ? qe(e.desired, r.desired) : ar(e, r);
 }
-var or = /* @__PURE__ */ function() {
+var ir = /* @__PURE__ */ function() {
   var e = null;
   return function(r) {
-    return e && Xe(e, r) ? e : (e = r, r);
+    return e && qe(e, r) ? e : (e = r, r);
   };
 }();
-function lr(e) {
+function or(e) {
   var r = e.desired, t = e.block;
   if (t != null && t.includes(r.type) && r.type !== "instruction-blocked") {
     var n = {
@@ -1479,24 +1479,24 @@ function lr(e) {
   }
   return r;
 }
-function ur(e, r) {
-  var t = r.block, n = tr(r, rr), a = ar(n), i = lr({
+function lr(e, r) {
+  var t = r.block, n = er(r, tr), a = nr(n), i = or({
     desired: a,
     block: t
-  }), l = or(i);
-  return Ce(Ce({}, e), {}, q({}, Ue, l));
+  }), o = ir(i);
+  return ke(ke({}, e), {}, V({}, Ve, o));
 }
-function Ve(e) {
+function Ge(e) {
   var r;
-  return (r = e[Ue]) !== null && r !== void 0 ? r : null;
+  return (r = e[Ve]) !== null && r !== void 0 ? r : null;
 }
-const E = {
+const O = {
   remove(e, r) {
     if (!Array.isArray(e) || !r)
       throw new Error("Invalid input for remove method");
     return e.filter((t) => t.id !== r).map((t) => ({
       ...t,
-      children: t.children ? E.remove(t.children, r) : void 0
+      children: t.children ? O.remove(t.children, r) : void 0
     }));
   },
   insertBefore(e, r, t) {
@@ -1504,7 +1504,7 @@ const E = {
       throw new Error("Invalid input for insertBefore method");
     return e.reduce((n, a) => (a.id === r ? n.push(t, a) : n.push({
       ...a,
-      children: a.children ? E.insertBefore(a.children, r, t) : void 0
+      children: a.children ? O.insertBefore(a.children, r, t) : void 0
     }), n), []);
   },
   insertAfter(e, r, t) {
@@ -1512,7 +1512,7 @@ const E = {
       throw new Error("Invalid input for insertAfter method");
     return e.reduce((n, a) => (a.id === r ? n.push(a, t) : n.push({
       ...a,
-      children: a.children ? E.insertAfter(a.children, r, t) : void 0
+      children: a.children ? O.insertAfter(a.children, r, t) : void 0
     }), n), []);
   },
   insertChild(e, r, t) {
@@ -1523,7 +1523,7 @@ const E = {
       children: [...n.children ?? [], t]
     } : {
       ...n,
-      children: n.children ? E.insertChild(n.children, r, t) : void 0
+      children: n.children ? O.insertChild(n.children, r, t) : void 0
     });
   },
   find(e, r) {
@@ -1532,7 +1532,7 @@ const E = {
     for (const t of e) {
       if (t.id === r) return t;
       if (t.children) {
-        const n = E.find(t.children, r);
+        const n = O.find(t.children, r);
         if (n) return n;
       }
     }
@@ -1547,7 +1547,7 @@ const E = {
     for (const n of e) {
       if (n.id === r) return [...t, n.id];
       if (n.children) {
-        const a = E.getPathToItem({
+        const a = O.getPathToItem({
           current: n.children,
           targetId: r,
           parentIds: [...t, n.id].filter(
@@ -1567,7 +1567,7 @@ const E = {
     let r = [];
     function t(n) {
       var a;
-      n.id && r.push(n.id), E.hasChildren(n) && ((a = n.children) == null || a.forEach((i) => t(i)));
+      n.id && r.push(n.id), O.hasChildren(n) && ((a = n.children) == null || a.forEach((i) => t(i)));
     }
     return e.forEach((n) => t(n)), r;
   },
@@ -1575,17 +1575,17 @@ const E = {
     if (!Array.isArray(e))
       throw new Error("Invalid input for traverseTree method");
     e.forEach((t) => {
-      r(t), E.hasChildren(t) && E.traverse(t.children ?? [], r);
+      r(t), O.hasChildren(t) && O.traverse(t.children ?? [], r);
     });
   }
 };
-function dr(e, r) {
-  const t = E.find(e, r.itemId);
+function ur(e, r) {
+  const t = O.find(e, r.itemId);
   if (!t) return e;
   if (r.type === "instruction") {
     const n = r.instruction;
     if (n.type === "reparent") {
-      const a = E.getPathToItem({
+      const a = O.getPathToItem({
         current: e,
         targetId: r.targetId
       });
@@ -1594,58 +1594,61 @@ function dr(e, r) {
         return;
       }
       const i = a[n.desiredLevel];
-      let l = E.remove(e, r.itemId);
-      return l = E.insertAfter(l, i, t), l;
+      let o = O.remove(e, r.itemId);
+      return o = O.insertAfter(o, i, t), o;
     }
     if (r.itemId === r.targetId) return e;
     if (n.type === "reorder-above") {
-      let a = E.remove(e, r.itemId);
-      return a = E.insertBefore(a, r.targetId, t), a;
+      let a = O.remove(e, r.itemId);
+      return a = O.insertBefore(a, r.targetId, t), a;
     }
     if (n.type === "reorder-below") {
-      let a = E.remove(e, r.itemId);
-      return a = E.insertAfter(a, r.targetId, t), a;
+      let a = O.remove(e, r.itemId);
+      return a = O.insertAfter(a, r.targetId, t), a;
     }
     if (n.type === "make-child") {
-      let a = E.remove(e, r.itemId);
-      return a = E.insertChild(a, r.targetId, t), a;
+      let a = O.remove(e, r.itemId);
+      return a = O.insertChild(a, r.targetId, t), a;
     }
     return console.warn("TODO: action not implemented", n), e;
   }
   if (r.type === "modal-move") {
-    let n = E.remove(e, t == null ? void 0 : t.id);
-    const a = cr(n, r.targetId) ?? [];
+    let n = O.remove(e, t == null ? void 0 : t.id);
+    const a = dr(n, r.targetId) ?? [];
     if (a.length === 0)
-      r.targetId === "" ? n = [t] : n = E.insertChild(n, r.targetId, t);
+      r.targetId === "" ? n = [t] : n = O.insertChild(n, r.targetId, t);
     else if (r.index === a.length) {
       const i = a[a.length - 1];
-      n = E.insertAfter(n, i.id, t);
+      n = O.insertAfter(n, i.id, t);
     } else {
       const i = a[r.index];
-      n = E.insertBefore(n, i.id, t);
+      n = O.insertBefore(n, i.id, t);
     }
     return n;
   }
   return e;
 }
-function cr(e, r) {
+function dr(e, r) {
   if (r === "") return e;
-  const t = E.find(e, r);
+  const t = O.find(e, r);
   if (!t) {
     console.error(`missing ${t}`);
     return;
   }
   return t.children;
 }
-const qe = {}, sr = (e) => {
-  qe[e] = !0;
+let fe = {};
+const cr = (e) => {
+  fe[e] = !0;
+}, sr = () => {
+  fe = {};
 }, fr = {
   key: 0,
   class: "pl-2"
 }, vr = {
   key: 1,
   class: "pl-2"
-}, pr = /* @__PURE__ */ ke({
+}, pr = /* @__PURE__ */ Ne({
   __name: "el-table-tree-item-dnd",
   props: {
     column: {},
@@ -1657,34 +1660,34 @@ const qe = {}, sr = (e) => {
   },
   emits: ["node-drag-start", "node-drag-enter", "node-drag-leave", "node-drag-over", "node-drag-end"],
   setup(e, { emit: r }) {
-    const t = e, n = r, a = $(), i = $(!1), l = Ne(() => t.item.hasChildren ? "expanded" : "standard"), d = $(null);
-    let u;
-    return Ge(() => {
-      var y, s, m;
-      let v;
-      a.value && (v = (y = a.value) == null ? void 0 : y.closest(".el-table__row"));
-      const O = $(v), p = Ze(O);
-      p && (qe[(s = t.item) == null ? void 0 : s.index] || (sr((m = t.item) == null ? void 0 : m.index), u = X(
-        Qt({
-          element: p,
+    const t = e, n = r, a = M(), i = M(!1), o = M(null);
+    let f;
+    return Le(() => {
+      var y, h, l;
+      let c;
+      a.value && (c = (y = a.value) == null ? void 0 : y.closest(".el-table__row"));
+      const p = M(c), m = Ze(p);
+      m && (fe[(h = t.item) == null ? void 0 : h.index] || (cr((l = t.item) == null ? void 0 : l.index), f = U(
+        Jt({
+          element: m,
           getInitialData: () => ({
             ...t.item.value,
             level: t.item.level,
             id: t.item.id
           }),
-          onDragStart: (c) => {
-            var g;
-            i.value = !0, (g = t == null ? void 0 : t.closeItem) == null || g.call(t, t.item.value), n("node-drag-start", c.source);
+          onDragStart: (u) => {
+            var v;
+            i.value = !0, (v = t == null ? void 0 : t.closeItem) == null || v.call(t, t.item.value), n("node-drag-start", u.source);
           },
           canDrag() {
-            var c;
-            return t != null && t.allowDrag && typeof t.allowDrag == "function" ? !!((c = t == null ? void 0 : t.allowDrag) != null && c.call(t, {
+            var u;
+            return t != null && t.allowDrag && typeof t.allowDrag == "function" ? !!((u = t == null ? void 0 : t.allowDrag) != null && u.call(t, {
               dragSource: t.item.value
             })) : !0;
           },
           onDrop: () => {
-            var c;
-            i.value = !1, (c = t == null ? void 0 : t.expandItem) == null || c.call(t, t.item.value);
+            var u;
+            i.value = !1, (u = t == null ? void 0 : t.expandItem) == null || u.call(t, t.item.value);
           }
           // onGenerateDragPreview({ nativeSetDragImage }) {
           //   setCustomNativeDragPreview({
@@ -1706,103 +1709,103 @@ const qe = {}, sr = (e) => {
           //   });
           // },
         }),
-        Jt({
-          element: p,
-          getData: ({ input: c, element: g }) => {
-            const o = { id: t.item.id };
-            return ur(o, {
-              input: c,
-              element: g,
+        _t({
+          element: m,
+          getData: ({ input: u, element: v }) => {
+            const g = { id: t.item.id };
+            return lr(g, {
+              input: u,
+              element: v,
               indentPerLevel: 16,
               currentLevel: t.item.level,
-              mode: l.value,
+              mode: "standard",
               block: []
             });
           },
-          canDrop: ({ source: c }) => {
-            var g, o;
-            return t != null && t.allowDrop && typeof t.allowDrop == "function" ? !!((o = t == null ? void 0 : t.allowDrop) != null && o.call(t, {
-              dragSource: c == null ? void 0 : c.data,
-              dropTarget: (g = t.item) == null ? void 0 : g.value
-            })) : c.data.id !== t.item.id;
+          canDrop: ({ source: u }) => {
+            var v, g;
+            return t != null && t.allowDrop && typeof t.allowDrop == "function" ? !!((g = t == null ? void 0 : t.allowDrop) != null && g.call(t, {
+              dragSource: u == null ? void 0 : u.data,
+              dropTarget: (v = t.item) == null ? void 0 : v.value
+            })) : u.data.id !== t.item.id;
           },
-          onDrag: ({ self: c, source: g, location: o }) => {
-            var h, b, w;
-            d.value = Ve(
-              c.data
+          onDrag: ({ self: u, source: v, location: g }) => {
+            var b, d, w;
+            o.value = Ge(
+              u.data
             ), n(
               "node-drag-over",
-              g == null ? void 0 : g.data,
-              (w = (b = (h = o == null ? void 0 : o.current) == null ? void 0 : h.dropTargets) == null ? void 0 : b[0]) == null ? void 0 : w.data
+              v == null ? void 0 : v.data,
+              (w = (d = (b = g == null ? void 0 : g.current) == null ? void 0 : b.dropTargets) == null ? void 0 : d[0]) == null ? void 0 : w.data
             );
           },
-          onDragEnter: ({ source: c, location: g }) => {
-            var o, h, b, w, f;
-            c.data.id !== t.item.id && ((h = t == null ? void 0 : t.expandItem) == null || h.call(t, (o = t.item) == null ? void 0 : o.value)), n(
+          onDragEnter: ({ source: u, location: v }) => {
+            var g, b, d, w, D;
+            u.data.id !== t.item.id && ((b = t == null ? void 0 : t.expandItem) == null || b.call(t, (g = t.item) == null ? void 0 : g.value)), n(
               "node-drag-enter",
-              c == null ? void 0 : c.data,
-              (f = (w = (b = g == null ? void 0 : g.current) == null ? void 0 : b.dropTargets) == null ? void 0 : w[0]) == null ? void 0 : f.data
+              u == null ? void 0 : u.data,
+              (D = (w = (d = v == null ? void 0 : v.current) == null ? void 0 : d.dropTargets) == null ? void 0 : w[0]) == null ? void 0 : D.data
             );
           },
-          onDragLeave: ({ source: c, location: g }) => {
-            var o, h, b;
-            d.value = null, n(
+          onDragLeave: ({ source: u, location: v }) => {
+            var g, b, d;
+            o.value = null, n(
               "node-drag-leave",
-              c == null ? void 0 : c.data,
-              (b = (h = (o = g == null ? void 0 : g.current) == null ? void 0 : o.dropTargets) == null ? void 0 : h[0]) == null ? void 0 : b.data
+              u == null ? void 0 : u.data,
+              (d = (b = (g = v == null ? void 0 : v.current) == null ? void 0 : g.dropTargets) == null ? void 0 : b[0]) == null ? void 0 : d.data
             );
           },
-          onDrop: ({ source: c, location: g }) => {
-            var o, h, b;
-            d.value = null, g.current.dropTargets[0].data.id === t.item.id && Le(() => {
-              var w, f;
-              (f = t == null ? void 0 : t.expandItem) == null || f.call(t, (w = t.item) == null ? void 0 : w.value);
+          onDrop: ({ source: u, location: v }) => {
+            var g, b, d;
+            o.value = null, v.current.dropTargets[0].data.id === t.item.id && Be(() => {
+              var w, D;
+              (D = t == null ? void 0 : t.expandItem) == null || D.call(t, (w = t.item) == null ? void 0 : w.value);
             }), n(
               "node-drag-end",
-              c == null ? void 0 : c.data,
-              (b = (h = (o = g == null ? void 0 : g.current) == null ? void 0 : o.dropTargets) == null ? void 0 : h[0]) == null ? void 0 : b.data
+              u == null ? void 0 : u.data,
+              (d = (b = (g = v == null ? void 0 : v.current) == null ? void 0 : g.dropTargets) == null ? void 0 : b[0]) == null ? void 0 : d.data
             );
           },
           getIsSticky: () => !0
         }),
-        Ye({
-          canMonitor: ({ source: c }) => c.data.id !== t.item.id
+        Xe({
+          canMonitor: ({ source: u }) => u.data.id !== t.item.id
         })
       )));
-    }), _e(() => {
-      u == null || u();
-    }), (v, O) => {
-      var p, y, s, m, c, g, o, h, b, w, f, D, x, S, P, I, j, T, A, B, K;
-      return C(), F("span", {
+    }), Fe(() => {
+      f == null || f(), sr();
+    }), (c, p) => {
+      var m, y, h, l, u, v, g, b, d, w, D, T, s, A, E, P, I, j, x, S, C;
+      return k(), F("span", {
         ref_key: "spanRef",
         ref: a,
-        class: ve({ "opacity-50": i.value })
+        class: pe({ "opacity-50": i.value })
       }, [
-        (y = (p = t.column) == null ? void 0 : p.slots) != null && y.default ? (C(), F("span", fr, [
-          Z(v.$slots, (m = (s = t.column) == null ? void 0 : s.slots) == null ? void 0 : m.default)
-        ])) : (C(), F("span", vr, Je(((f = (c = t == null ? void 0 : t.column) == null ? void 0 : c.formatter) == null ? void 0 : f.call(
-          c,
-          (g = t.item) == null ? void 0 : g.value,
+        (y = (m = t.column) == null ? void 0 : m.slots) != null && y.default ? (k(), F("span", fr, [
+          G(c.$slots, (l = (h = t.column) == null ? void 0 : h.slots) == null ? void 0 : l.default)
+        ])) : (k(), F("span", vr, _e(((D = (u = t == null ? void 0 : t.column) == null ? void 0 : u.formatter) == null ? void 0 : D.call(
+          u,
+          (v = t.item) == null ? void 0 : v.value,
           t == null ? void 0 : t.column,
-          (b = (o = t.item) == null ? void 0 : o.value) == null ? void 0 : b[(h = t.column) == null ? void 0 : h.prop],
+          (d = (g = t.item) == null ? void 0 : g.value) == null ? void 0 : d[(b = t.column) == null ? void 0 : b.prop],
           (w = t.item) == null ? void 0 : w.index
-        )) || ((S = (D = t.item) == null ? void 0 : D.value) == null ? void 0 : S[(x = t.column) == null ? void 0 : x.prop])), 1)),
-        d.value ? (C(), F("span", {
+        )) || ((A = (T = t.item) == null ? void 0 : T.value) == null ? void 0 : A[(s = t.column) == null ? void 0 : s.prop])), 1)),
+        o.value ? (k(), F("span", {
           key: 2,
-          class: ve(["absolute h-full w-full top-0 border-blue-500", {
-            "!border-b-2": ((P = d.value) == null ? void 0 : P.type) === "reorder-below",
-            "!border-t-2": ((I = d.value) == null ? void 0 : I.type) === "reorder-above",
-            "!border-2 rounded": ((j = d.value) == null ? void 0 : j.type) === "make-child"
+          class: pe(["absolute h-full w-full top-0 border-blue-500", {
+            "!border-b-2": ((E = o.value) == null ? void 0 : E.type) === "reorder-below",
+            "!border-t-2": ((P = o.value) == null ? void 0 : P.type) === "reorder-above",
+            "!border-2 rounded": ((I = o.value) == null ? void 0 : I.type) === "make-child"
           }]),
-          style: Qe({
-            left: `${((T = d.value) == null ? void 0 : T.currentLevel) * ((A = d.value) == null ? void 0 : A.indentPerLevel)}px`,
-            width: `calc(100% - ${((B = d.value) == null ? void 0 : B.currentLevel) * ((K = d.value) == null ? void 0 : K.indentPerLevel)}px)`
+          style: Je({
+            left: `${((j = o.value) == null ? void 0 : j.currentLevel) * ((x = o.value) == null ? void 0 : x.indentPerLevel)}px`,
+            width: `calc(100% - ${((S = o.value) == null ? void 0 : S.currentLevel) * ((C = o.value) == null ? void 0 : C.indentPerLevel)}px)`
           })
-        }, null, 6)) : Be("", !0)
+        }, null, 6)) : He("", !0)
       ], 2);
     };
   }
-}), gr = { class: "el-table-tree-dnd" }, yr = /* @__PURE__ */ ke({
+}), gr = { class: "el-table-tree-dnd" }, yr = /* @__PURE__ */ Ne({
   __name: "el-table-tree-dnd",
   props: {
     data: { default: () => [] },
@@ -1859,50 +1862,50 @@ const qe = {}, sr = (e) => {
   },
   emits: ["node-drag-start", "node-drop", "node-drag-enter", "node-drag-leave", "node-drag-over", "node-drag-end", "selection-change", "size-change", "current-change"],
   setup(e, { expose: r, emit: t }) {
-    const n = e, a = t, i = $(), l = (p) => {
-      var y;
-      (y = i.value) == null || y.toggleRowExpansion(p, !0);
-    }, d = (p) => {
-      var y;
-      (y = i.value) == null || y.toggleRowExpansion(p, !1);
+    const n = e, a = t, i = M(), o = (h) => {
+      var l;
+      (l = i.value) == null || l.toggleRowExpansion(h, !0);
+    }, f = (h) => {
+      var l;
+      (l = i.value) == null || l.toggleRowExpansion(h, !1);
     };
-    et((p) => {
-      const y = X(
-        Ye({
-          onDrop(s) {
-            const { location: m, source: c } = s;
-            if (!m.current.dropTargets.length) return;
-            const g = c.data.id, o = m.current.dropTargets[0], h = o.data.id, b = Ve(o.data);
-            if (b !== null) {
-              const w = dr(n.data, {
+    let c;
+    Le(() => {
+      c = U(
+        Xe({
+          onDrop(h) {
+            const { location: l, source: u } = h;
+            if (!l.current.dropTargets.length) return;
+            const v = u.data.id, g = l.current.dropTargets[0], b = g.data.id, d = Ge(g.data);
+            if (d !== null) {
+              const w = ur(n.data, {
                 type: "instruction",
-                instruction: b,
-                itemId: g,
-                targetId: h
-              }) ?? [], f = E.find(J(n.data), h);
+                instruction: d,
+                itemId: v,
+                targetId: b
+              }) ?? [], D = O.find(_(n.data), b);
               a("node-drop", {
                 newNodeData: w,
-                oldNodeData: J(n.data),
-                dragSource: c.data,
-                dropTarget: f
+                oldNodeData: _(n.data),
+                dragSource: u.data,
+                dropTarget: D
               });
             }
           }
         })
       );
-      p(() => {
-        y();
-      });
+    }), Fe(() => {
+      c == null || c();
     });
-    const u = (p) => {
-      a("node-drag-start", { dragSource: p });
-    }, v = (p, y, s) => {
-      const m = E.find(J(n.data), y == null ? void 0 : y.id);
-      a(`node-drag-${s}`, {
-        dragSource: p,
-        dropTarget: m
+    const p = (h) => {
+      a("node-drag-start", { dragSource: h });
+    }, m = (h, l, u) => {
+      const v = O.find(_(n.data), l == null ? void 0 : l.id);
+      a(`node-drag-${u}`, {
+        dragSource: h,
+        dropTarget: v
       });
-    }, O = Ne(() => Object.assign(
+    }, y = Qe(() => Object.assign(
       {
         small: !1,
         background: !1,
@@ -1916,11 +1919,11 @@ const qe = {}, sr = (e) => {
       (n == null ? void 0 : n.pagination) || {}
     ));
     return r({
-      getElTableExpose: async () => (await Le(), i == null ? void 0 : i.value)
-    }), (p, y) => {
-      const s = Q("el-table-column"), m = Q("el-table"), c = Q("el-pagination"), g = tt("loading");
-      return C(), F("div", gr, [
-        rt((C(), ee(m, {
+      getElTableExpose: async () => (await Be(), i == null ? void 0 : i.value)
+    }), (h, l) => {
+      const u = J("el-table-column"), v = J("el-table"), g = J("el-pagination"), b = et("loading");
+      return k(), F("div", gr, [
+        tt((k(), Q(v, {
           ref_key: "tableRef",
           ref: i,
           data: n.data,
@@ -1930,77 +1933,77 @@ const qe = {}, sr = (e) => {
           showOverflowTooltip: n.showOverflowTooltip,
           lazy: n.lazy,
           "tree-props": { children: "children", hasChildren: "hasChildren" },
-          onSelectionChange: y[4] || (y[4] = (o) => {
-            a("selection-change", o);
+          onSelectionChange: l[4] || (l[4] = (d) => {
+            a("selection-change", d);
           })
         }, {
-          default: R(() => [
-            (C(!0), F(nt, null, at(n.columns, (o, h) => {
-              var b, w;
-              return C(), ee(s, pe({
-                key: `table-column-${h}`,
-                align: o.align,
-                headerAlign: o.headerAlign,
-                prop: o == null ? void 0 : o.prop,
-                label: o.label,
-                type: o.type,
-                "reserve-selection": o.reserveSelection,
-                selectable: o.selectable,
-                fixed: o.fixed,
-                width: o.width,
+          default: K(() => [
+            (k(!0), F(rt, null, nt(n.columns, (d, w) => {
+              var D, T;
+              return k(), Q(u, ge({
+                key: `table-column-${w}`,
+                align: d.align,
+                headerAlign: d.headerAlign,
+                prop: d == null ? void 0 : d.prop,
+                label: d.label,
+                type: d.type,
+                "reserve-selection": d.reserveSelection,
+                selectable: d.selectable,
+                fixed: d.fixed,
+                width: d.width,
                 ref_for: !0
-              }, o), ge({ _: 2 }, [
-                (b = o == null ? void 0 : o.slots) != null && b.header ? {
+              }, d), ye({ _: 2 }, [
+                (D = d == null ? void 0 : d.slots) != null && D.header ? {
                   name: "header",
-                  fn: R(() => {
-                    var f;
+                  fn: K(() => {
+                    var s;
                     return [
-                      Z(p.$slots, (f = o == null ? void 0 : o.slots) == null ? void 0 : f.header, {}, void 0, !0)
+                      G(h.$slots, (s = d == null ? void 0 : d.slots) == null ? void 0 : s.header, {}, void 0, !0)
                     ];
                   }),
                   key: "0"
                 } : void 0,
-                o.type !== "selection" && o.type !== "index" && n.draggable ? {
+                d.type !== "selection" && d.type !== "index" && n.draggable ? {
                   name: "default",
-                  fn: R((f) => {
-                    var D, x, S, P, I, j;
+                  fn: K((s) => {
+                    var A, E, P, I, j, x;
                     return [
-                      it(pr, {
+                      at(pr, {
                         item: {
-                          id: (D = f == null ? void 0 : f.row) == null ? void 0 : D.id,
-                          index: f == null ? void 0 : f.$index,
-                          level: (x = f == null ? void 0 : f.treeNode) == null ? void 0 : x.level,
-                          value: f == null ? void 0 : f.row,
-                          hasChildren: !!((P = (S = f == null ? void 0 : f.row) == null ? void 0 : S.children) != null && P.length)
+                          id: (A = s == null ? void 0 : s.row) == null ? void 0 : A.id,
+                          index: s == null ? void 0 : s.$index,
+                          level: (E = s == null ? void 0 : s.treeNode) == null ? void 0 : E.level,
+                          value: s == null ? void 0 : s.row,
+                          hasChildren: !!((I = (P = s == null ? void 0 : s.row) == null ? void 0 : P.children) != null && I.length)
                         },
-                        column: o,
-                        "expand-item": l,
-                        "close-item": d,
-                        onNodeDragStart: u,
-                        onNodeDragEnter: y[0] || (y[0] = (T, A) => {
-                          v(T, A, "enter");
+                        column: d,
+                        "expand-item": o,
+                        "close-item": f,
+                        onNodeDragStart: p,
+                        onNodeDragEnter: l[0] || (l[0] = (S, C) => {
+                          m(S, C, "enter");
                         }),
-                        onNodeDragLeave: y[1] || (y[1] = (T, A) => {
-                          v(T, A, "leave");
+                        onNodeDragLeave: l[1] || (l[1] = (S, C) => {
+                          m(S, C, "leave");
                         }),
-                        onNodeDragOver: y[2] || (y[2] = (T, A) => {
-                          v(T, A, "over");
+                        onNodeDragOver: l[2] || (l[2] = (S, C) => {
+                          m(S, C, "over");
                         }),
-                        onNodeDragEnd: y[3] || (y[3] = (T, A) => {
-                          v(T, A, "end");
+                        onNodeDragEnd: l[3] || (l[3] = (S, C) => {
+                          m(S, C, "end");
                         }),
                         "allow-drag": n == null ? void 0 : n.allowDrag,
                         "allow-drop": n == null ? void 0 : n.allowDrop
-                      }, ge({ _: 2 }, [
-                        (I = o == null ? void 0 : o.slots) != null && I.default ? {
-                          name: (j = o == null ? void 0 : o.slots) == null ? void 0 : j.default,
-                          fn: R(() => {
-                            var T;
+                      }, ye({ _: 2 }, [
+                        (j = d == null ? void 0 : d.slots) != null && j.default ? {
+                          name: (x = d == null ? void 0 : d.slots) == null ? void 0 : x.default,
+                          fn: K(() => {
+                            var S;
                             return [
-                              Z(p.$slots, (T = o == null ? void 0 : o.slots) == null ? void 0 : T.default, {
-                                row: f == null ? void 0 : f.row,
+                              G(h.$slots, (S = d == null ? void 0 : d.slots) == null ? void 0 : S.default, {
+                                row: s == null ? void 0 : s.row,
                                 column: "column",
-                                $index: f == null ? void 0 : f.$index
+                                $index: s == null ? void 0 : s.$index
                               }, void 0, !0)
                             ];
                           }),
@@ -2011,15 +2014,15 @@ const qe = {}, sr = (e) => {
                   }),
                   key: "1"
                 } : void 0,
-                !n.draggable && ((w = o == null ? void 0 : o.slots) != null && w.default) ? {
+                !n.draggable && ((T = d == null ? void 0 : d.slots) != null && T.default) ? {
                   name: "default",
-                  fn: R((f) => {
-                    var D;
+                  fn: K((s) => {
+                    var A;
                     return [
-                      Z(p.$slots, (D = o == null ? void 0 : o.slots) == null ? void 0 : D.default, {
-                        row: f == null ? void 0 : f.row,
+                      G(h.$slots, (A = d == null ? void 0 : d.slots) == null ? void 0 : A.default, {
+                        row: s == null ? void 0 : s.row,
                         column: "column",
-                        $index: f == null ? void 0 : f.$index
+                        $index: s == null ? void 0 : s.$index
                       }, void 0, !0)
                     ];
                   }),
@@ -2030,17 +2033,17 @@ const qe = {}, sr = (e) => {
           ]),
           _: 3
         }, 8, ["data", "row-key", "border", "default-expand-all", "showOverflowTooltip", "lazy"])), [
-          [g, n.loading]
+          [b, n.loading]
         ]),
-        n.pagination ? (C(), ee(c, pe({ key: 0 }, O.value, {
-          onSizeChange: y[5] || (y[5] = (o) => {
-            a("size-change", o);
+        n.pagination ? (k(), Q(g, ge({ key: 0 }, y.value, {
+          onSizeChange: l[5] || (l[5] = (d) => {
+            a("size-change", d);
           }),
-          onCurrentChange: y[6] || (y[6] = (o) => {
-            a("current-change", o);
+          onCurrentChange: l[6] || (l[6] = (d) => {
+            a("current-change", d);
           }),
           style: { "margin-top": "10px" }
-        }), null, 16)) : Be("", !0)
+        }), null, 16)) : He("", !0)
       ]);
     };
   }
@@ -2049,8 +2052,8 @@ const qe = {}, sr = (e) => {
   for (const [n, a] of r)
     t[n] = a;
   return t;
-}, br = /* @__PURE__ */ mr(yr, [["__scopeId", "data-v-9a30b557"]]);
+}, br = /* @__PURE__ */ mr(yr, [["__scopeId", "data-v-047b155f"]]);
 export {
   br as default,
-  E as treeHandler
+  O as treeHandler
 };

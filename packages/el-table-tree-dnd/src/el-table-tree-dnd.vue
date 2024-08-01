@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { watchEffect, ref, nextTick, computed, toRaw, withDefaults } from "vue";
+import {
+  watchEffect,
+  ref,
+  nextTick,
+  computed,
+  toRaw,
+  withDefaults,
+  onMounted,
+  onBeforeUnmount,
+} from "vue";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import {
@@ -48,9 +57,10 @@ const expandItem = (row: any) => {
 const closeItem = (row: any) => {
   tableRef.value?.toggleRowExpansion(row, false);
 };
+let dndCleanup;
 
-watchEffect((onCleanup) => {
-  const dndCleanup = combine(
+onMounted(() => {
+  dndCleanup = combine(
     monitorForElements({
       onDrop(args) {
         const { location, source } = args;
@@ -84,10 +94,10 @@ watchEffect((onCleanup) => {
       },
     })
   );
+});
 
-  onCleanup(() => {
-    dndCleanup();
-  });
+onBeforeUnmount(() => {
+  dndCleanup?.();
 });
 
 const handleNodeDragStart = (source) => {
@@ -126,7 +136,7 @@ defineExpose<TableRefExpose>({
   getElTableExpose: async () => {
     await nextTick();
     return tableRef?.value!;
-  }
+  },
 });
 </script>
 <template>
